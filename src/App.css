@@ -1,42 +1,269 @@
-#root {
-  max-width: 1280px;
+.todo-container {
+  max-width: 600px;
   margin: 0 auto;
-  padding: 2rem;
+  padding: 10px;
+}
+
+.todo-header {
+  text-align: center;
+  position: relative;
+}
+
+.todo-title {
+  font-size: 54px;
+  cursor: pointer;
+  margin-bottom: 50px;
+  display: inline-block; /* Para permitir alinhamento vertical */
+}
+
+.controls-edit {
+  display: flex;
+  font-size: 14px;
+  cursor: pointer;
+  position: absolute;
+  left: 500px;
+  top: 80%;
+  transform: translateY(-50%);
+}
+
+.controls-tasks {
+  display: flex;
+  font-size: 14px;
+  cursor: pointer;
+  position: absolute;
+  top: 90%;
+  transform: translateY(-50%);
+  transform: translateX(-4%);
+}
+
+.tasks-title {
+  background: none;
+  border: none;
+  color: #98a2b3;
+  cursor: pointer;
+  margin-left: -50px;
+  font-size: 14px;
+  padding: 70px;
+}
+
+.edit-title {
+  background: none;
+  border: none;
+  color: #98a2b3;
+  cursor: pointer;
+  margin-right: 5px;
+  font-size: 14px;
+  padding: 10px;
+}
+
+.todo-input-container {
+  display: flex;
+  align-items: center;
+  margin-top: 10px;
+  padding: 10px;
+  background-color: white;
+  border: 1px solid white;
+  border-radius: 4px;
+  margin-bottom: 10px;
+}
+
+.todo-input {
+  flex-grow: 1;
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid white;
+  border-radius: 4px;
+  margin-right: 10px;
+}
+
+.add-button {
+  padding: 10px;
+  font-size: 16px;
+  border: none;
+  border-radius: 4px;
+  background-color: #98a2b3;
+  color: #f2f4f7;
+  cursor: pointer;
+}
+
+.todo-list {
+  list-style-type: none;
+  padding: 0;
+  margin-top: 20px;
+}
+
+.todo-item {
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  background-color: white;
+  border: 1px solid white;
+  border-radius: 4px;
+  margin-bottom: -15px;
+}
+
+.todo-content {
+  display: flex;
+  align-items: center;
+  flex-grow: 1;
+}
+
+.todo-checkbox {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  border: 1px solid #d0d5dd;
+  margin-right: 10px;
+  position: relative;
+  background-color: #d0d5dd;
+}
+
+.todo-checkbox input[type="checkbox"] {
+  opacity: 0;
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+}
+
+.todo-checkbox input[type="checkbox"]:checked + .custom-checkbox {
+  background-color: #1d2939; /* Cor de fundo quando marcado */
+}
+
+.todo-checkbox .custom-checkbox {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background-color: transparent;
+}
+
+.Move-icon {
+  width: 20px; /* Ajuste o tamanho conforme necessário */
+  height: 20px; /* Ajuste o tamanho conforme necessário */
+  margin-right: 8px; /* Espaçamento à direita do ícone */
+}
+
+.todo-text {
+  flex-grow: 1;
+  font-size: 16px;
+  color: #333;
+  cursor: pointer;
+  transition: text-decoration 0.2s ease-in-out; /* Transição suave */
+  padding: 10px; /* Adicionado padding para esticar o texto */
+}
+
+.todo-text.completed {
+  text-decoration: line-through; /* Riscar texto quando marcado */
+  color: #98a2b3; /* Cor do texto riscado */
+}
+
+.edit-input {
+  flex-grow: 1;
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #d0d5dd;
+  border-radius: 4px;
+}
+
+.todo-actions {
+  display: flex;
+  align-items: center;
+}
+
+.todo-actions button {
+  background: none;
+  border: none;
+  color: #98a2b3;
+  cursor: pointer;
+  font-size: 14px;
+  padding: 0;
+  margin-left: 10px;
+}
+
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.modal-content {
+  background-color: #f2f4f7;
+  padding: 20px;
+  border-radius: 8px;
+  max-width: 400px;
+  width: 100%;
   text-align: center;
 }
 
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
+.modal-title {
+  font-size: 16px;
+  font-weight: bold;
+  margin-bottom: 5px;
 }
 
-@keyframes logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.modal-description {
+  font-size: 14px;
+  margin-bottom: 20px;
+  color: #666;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
-  }
+.modal-actions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 20px;
 }
 
-.card {
-  padding: 2em;
+.comment-button {
+  background: #1d2939;
+  border: none;
+  cursor: pointer;
+  padding: 10px;
 }
 
-.read-the-docs {
-  color: #888;
+.comment-button svg {
+  width: 20px;
+  height: 20px;
+  fill: #1d2939;
+}
+
+.close-button {
+  background: #1d2939;
+  border: none;
+  color: #fff;
+  cursor: pointer;
+  margin-top: 20px;
+  font-size: 14px;
+}
+
+.editing-button {
+  position: absolute;
+  top: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #1d2939;
+  color: #fff;
+  padding: 5px 10px;
+  border-radius: 5px;
+  font-size: 20px;
+}
+
+.editing-indicator {
+  background-color: #344054;
+  color: #fff;
+  padding: 5px 10px;
+  border: 1px solid #344054;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 14px;
+  margin-bottom: 10px; /* Ajuste conforme necessário */
 }
