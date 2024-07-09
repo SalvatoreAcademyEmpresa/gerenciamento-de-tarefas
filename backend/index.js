@@ -17,8 +17,9 @@ async function main() {
 
     const app = express()
 
-    app.get('/', function (req, res) {
-        res.send('Hello World')
+    app.get('/tarefas', async function (req, res) {
+        const itens = await collection.find().toArray()
+        res.send(itens)
     })
 
     app.listen(3000)
