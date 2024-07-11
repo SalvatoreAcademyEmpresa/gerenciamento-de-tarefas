@@ -151,3 +151,11 @@
   cursor: not-allowed; /* Cursor de não permitido */
   pointer-events: none; /* Desabilitar eventos de clique */
 }
+
+.todo-item {
+  transition: transform 0.2s ease-in-out;
+}
+
+.todo-item.clicked {
+  transform: translateY(4px); /* Aplica o movimento de 4px ao clicar */
+}

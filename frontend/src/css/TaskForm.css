@@ -50,6 +50,7 @@
   margin-right: 5px;
   font-size: 14px;
   padding: 10px;
+  transform: translateY(-25%);
 }
 
 .remove {

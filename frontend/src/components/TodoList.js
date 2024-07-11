@@ -5,8 +5,8 @@ import "../css/TodoList.css";
 import TaskForm from "./TaskForm";
 import TaskItem from "./TaskItem";
 import "../css/Modal.css";
-import deleteSound from "../assets/audio/delete_sound.mp3";
-import clickSound from "../assets/audio/click-som.mp3";
+import deleteSound from "../assets/audio/delete_sound.mp3"; // Importe o som de Remove
+import clickSound from "../assets/audio/click-som.mp3"; // Importe o som de click do checkbox
 import addSound from "../assets/audio/add-som.mp3"; // Importe o som de adicionar
 
 const TodoList = () => {
@@ -18,6 +18,7 @@ const TodoList = () => {
     { text: "Find out the parking", completed: false },
     { text: "Call them", completed: false },
   ]);
+
   const [editingIndex, setEditingIndex] = useState(null);
   const [isEditing, setIsEditing] = useState(false);
   const [title, setTitle] = useState("Booking Movie Tickets");
@@ -112,6 +113,7 @@ const TodoList = () => {
         <header className="todo-header">
           {isEditing && <div className="editing-indicator">Editing...</div>}
           {isEditingTitle ? (
+
             <input
               type="text"
               value={editingTitle}
@@ -125,6 +127,7 @@ const TodoList = () => {
               className="edit-title-input"
               autoFocus
             />
+
           ) : (
             <h1 className="todo-title" onClick={() => setIsEditingTitle(true)}>
               {title}
@@ -146,6 +149,7 @@ const TodoList = () => {
 
           {editingIndex !== null && (
             <div className="controls-remove">
+              
               <p
                 className="remove"
                 onClick={() => {
@@ -163,6 +167,7 @@ const TodoList = () => {
 
         <ul className="todo-list">
           {todos.map((todo, index) => (
+
             <TaskItem
               key={index}
               index={index}
@@ -181,14 +186,17 @@ const TodoList = () => {
         
         <TaskForm onAdd={addTodo} />
         {isEditing && (
+
           <button
             className="save-button"
             onClick={() => saveEdit(editingIndex, todos[editingIndex].text)}
           >
             Save
           </button>
+
         )}
         {showModal && (
+
           <div className="modal-overlay" onClick={cancelRemove}>
             <div className="modal-content">
               <div className="modal-title">
@@ -201,6 +209,7 @@ const TodoList = () => {
               </div>
             </div>
           </div>
+
         )}
       </div>
     </DndProvider>

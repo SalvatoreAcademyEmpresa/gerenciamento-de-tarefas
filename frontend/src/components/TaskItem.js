@@ -27,6 +27,7 @@ const TaskItem = ({
   const [showDetails, setShowDetails] = useState(false);
   const [showCommentIcon, setShowCommentIcon] = useState(false);
   const [isCommentIconDisabled] = useState(true); // Estado para controlar o ícone de comentário desabilitado
+  const [isClicked, setIsClicked] = useState(false); // Estado para controlar se a tarefa está clicada
 
   const isCurrentEditing = editingIndex === index;
   const [{ isDragging }, ref] = useDrag({
@@ -70,14 +71,20 @@ const TaskItem = ({
     window.location.href = "https://calendar.google.com/calendar/u/0/r";
   };
 
+  const handleClick = () => {
+    setIsClicked(true); // Define a tarefa como clicada
+    setTimeout(() => setIsClicked(false), 100); // Reseta o estado após 100ms
+  };
+
   return (
     <>
       <li
         ref={(node) => ref(drop(node))}
-        className="todo-item"
+        className={`todo-item ${isClicked ? "clicked" : ""}`} // Adiciona a classe quando a tarefa está clicada
         style={{ opacity: isDragging ? 0.5 : 1 }}
         onMouseEnter={() => setShowCommentIcon(true)}
         onMouseLeave={() => setShowCommentIcon(false)}
+        onClick={handleClick} // Adiciona o manipulador de clique
       >
         <div className="todo-content">
           <img src={moveIcon} alt="Move Icon" className="move-icon" />
@@ -101,7 +108,6 @@ const TaskItem = ({
               className="edit-input"
               ref={inputRef}
             />
-
           ) : (
             <div
               className={`todo-text ${todo.completed ? "completed" : ""}`}
@@ -109,7 +115,6 @@ const TaskItem = ({
             >
               {todo.text}
             </div>
-            
           )}
           {showCommentIcon && (
             <>
@@ -138,7 +143,6 @@ const TaskItem = ({
                 className="remove-icon"
                 onClick={() => removeTodo(index)}
               />
-
             </>
           )}
         </div>
