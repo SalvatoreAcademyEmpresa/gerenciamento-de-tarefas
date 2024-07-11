@@ -111,8 +111,6 @@
   padding: 10px;
 }
 
-/* Estilo para TaskItem */
-
 .task-item {
   padding: 10px;
   border: 1px solid #ddd;
@@ -147,3 +145,9 @@
   cursor: pointer;
 }
 
+/* Estilo para ícones desabilitados */
+.comment-icon.disabled {
+  color: #dcdbdb; /* Cor cinza para indicar desabilitado */
+  cursor: not-allowed; /* Cursor de não permitido */
+  pointer-events: none; /* Desabilitar eventos de clique */
+}

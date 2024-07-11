@@ -5,6 +5,7 @@ import {
   faTrashAlt,
   faEdit,
   faCalendar,
+  faComment,
 } from "@fortawesome/free-solid-svg-icons";
 import "../css/TaskItem.css";
 import TaskDetails from "../components/comment/CommentList";
@@ -24,7 +25,9 @@ const TaskItem = ({
 }) => {
   const [editingText, setEditingText] = useState(todo.text);
   const [showDetails, setShowDetails] = useState(false);
-  const [showCommentIcon, setShowCommentIcon] = useState(false); // State to show/hide icons
+  const [showCommentIcon, setShowCommentIcon] = useState(false);
+  const [isCommentIconDisabled] = useState(true); // Estado para controlar o ícone de comentário desabilitado
+
   const isCurrentEditing = editingIndex === index;
   const [{ isDragging }, ref] = useDrag({
     type: ItemType,
@@ -64,7 +67,7 @@ const TaskItem = ({
   };
 
   const handleReminderClick = () => {
-    window.location.href = "https://calendar.google.com/calendar/u/0/r"; // Função para adicionar um lembrete para uma tarefa específica
+    window.location.href = "https://calendar.google.com/calendar/u/0/r";
   };
 
   return (
@@ -86,6 +89,7 @@ const TaskItem = ({
             />
             <div className="custom-checkbox"></div>
           </div>
+
           {isCurrentEditing ? (
             <input
               type="text"
@@ -97,6 +101,7 @@ const TaskItem = ({
               className="edit-input"
               ref={inputRef}
             />
+
           ) : (
             <div
               className={`todo-text ${todo.completed ? "completed" : ""}`}
@@ -104,24 +109,36 @@ const TaskItem = ({
             >
               {todo.text}
             </div>
+            
           )}
           {showCommentIcon && (
             <>
               <FontAwesomeIcon
+                icon={faComment}
+                className={`comment-icon ${
+                  isCommentIconDisabled ? "disabled" : ""
+                }`}
+                onClick={!isCommentIconDisabled ? toggleDetails : undefined}
+              />
+
+              <FontAwesomeIcon
                 icon={faCalendar}
                 className="reminder-icon"
-                onClick={handleReminderClick} // Associando a função de redirecionamento ao clique no ícone
+                onClick={handleReminderClick}
               />
+
               <FontAwesomeIcon
                 icon={faEdit}
                 className="edit-icon"
                 onClick={startEditing}
               />
+
               <FontAwesomeIcon
                 icon={faTrashAlt}
                 className="remove-icon"
                 onClick={() => removeTodo(index)}
               />
+
             </>
           )}
         </div>
