@@ -1,11 +1,13 @@
 import React, { useState, useRef } from "react";
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
-import "../css/TodoList.css"; // Import the CSS file for the todo container
+import "../css/TodoList.css";
 import TaskForm from "./TaskForm";
 import TaskItem from "./TaskItem";
-import "../css/Modal.css"; // Import the CSS file for the modal
-import deleteSound from "../assets/delete_sound.mp3"; // Import the delete sound
+import "../css/Modal.css";
+import deleteSound from "../assets/audio/delete_sound.mp3";
+import clickSound from "../assets/audio/click-som.mp3";
+import addSound from "../assets/audio/add-som.mp3"; // Importe o som de adicionar
 
 const TodoList = () => {
   const [todos, setTodos] = useState([
@@ -23,10 +25,14 @@ const TodoList = () => {
   const [editingTitle, setEditingTitle] = useState(title);
   const [showModal, setShowModal] = useState(false);
   const [indexToRemove, setIndexToRemove] = useState(null);
-  const audioRef = useRef(new Audio(deleteSound)); // Create an audio reference
+  
+  const audioDeleteRef = useRef(new Audio(deleteSound));
+  const audioClickRef = useRef(new Audio(clickSound));
+  const audioAddRef = useRef(new Audio(addSound)); // Referência ao som de adicionar
 
   const addTodo = (newTodo) => {
     setTodos([...todos, { text: newTodo, completed: false }]);
+    audioAddRef.current.play(); // Reproduz o som de adicionar
   };
 
   const removeTodo = (index) => {
@@ -34,7 +40,7 @@ const TodoList = () => {
     setTodos(updatedTodos);
     setEditingIndex(null);
     setIsEditing(false);
-    audioRef.current.play(); // Play the delete sound
+    audioDeleteRef.current.play(); // Reproduz o som de exclusão
   };
 
   const saveTitleEdit = () => {
@@ -56,12 +62,16 @@ const TodoList = () => {
     setTodos(updatedTodos);
     setEditingIndex(null);
     setIsEditing(false);
+    audioAddRef.current.play(); // Reproduz o som de adicionar ao salvar
   };
 
   const toggleTodoCompletion = (index) => {
     const updatedTodos = [...todos];
     updatedTodos[index].completed = !updatedTodos[index].completed;
     setTodos(updatedTodos);
+
+    // Reproduz o som de clique ao marcar ou desmarcar o checkbox
+    audioClickRef.current.play();
   };
 
   const startEditingFirstTask = () => {

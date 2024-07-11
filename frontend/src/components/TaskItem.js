@@ -9,7 +9,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import "../css/TaskItem.css";
 import TaskDetails from "../components/comment/CommentList";
-import moveIcon from "../assets/move-icon.png";
+import moveIcon from "../assets/img/move-icon.png";
 
 const ItemType = "TODO";
 
