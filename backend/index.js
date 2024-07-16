@@ -7,12 +7,12 @@ const dbName = 'mongo_todo_list'
 
 async function main() {
 
-    const Client = new MongoClient(dbUrl)
+    const client = new MongoClient(dbUrl)
     console.log("Conectando ao banco de dados")
-    await Client.connect()
+    await client.connect()
     console.log("Banco de dados conectado com sucesso!")
 
-    const db = Client.db(dbName)
+    const db = client.db(dbName)
     const collection = db.collection('tarefas')
 
     const app = express()
