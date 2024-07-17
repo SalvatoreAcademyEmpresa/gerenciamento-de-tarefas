@@ -2,19 +2,21 @@ require('dotenv').config()
 const express = require('express')
 const { connectToDatabase } = require('./db/database-connection')
 
+const tarefasRouter = require('./tarefas/tarefas.router')
+
 async function main() {
-
-    const db = client.db(dbName)
-    const collection = db.collection('tarefas')
-
+    
+    await connectToDatabase()
     const app = express()
+
     app.use(express.json())
 
-    app.get('/tarefas', async function (req, res) {
-        const itens = await collection.find().toArray()
-        res.send(itens)
+    app.get('/', function (req, res) {
+        res.send('Hello World!')
     })
 
+    app.use('/tarefas', tarefasRouter)
+    
     app.listen(3000, function() {
         console.log("Servidor rodando!")
     })
