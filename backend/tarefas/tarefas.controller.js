@@ -17,7 +17,7 @@ async function readById(req, res) {
 async function create(req, res){
     const newItem = req.body
 
-    if(!newItem || !newItem.nome) {
+    if(!newItem || !newItem.text) {
         return res.status(400).send('Não se esqueça do `nome`!')
     }
     await service.create(newItem)
@@ -28,7 +28,7 @@ async function updateById(req, res){
     const id = req.params.id
     const newItem = req.body
 
-    if(!newItem || !newItem.nome){
+    if(!newItem || !newItem.text){
         return res.status(400).send('Não se esqueça do `nome`!')
     }
     await service.updateById(id, newItem)
