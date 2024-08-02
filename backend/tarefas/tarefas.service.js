@@ -1,12 +1,14 @@
-const { ObjectId } = require('mongodb')
-const { getDatabase } = require('../db/database-connection')
+const Task = require('../db/task.model')
+//const { ObjectId } = require('mongodb')
+//const { getDatabase } = require('../db/database-connection')
 
-function getCollection() {
+/*function getCollection() {
     return getDatabase().collection('tarefas')
-}
+}*/
 
 function readAll() {
-    return getCollection().find().toArray()
+    //return getCollection().find().toArray()
+    return Task.find.exec();
 }
 
 /**
@@ -15,11 +17,14 @@ function readAll() {
  */
 
 function readById(id){
-    return getCollection().findOne({ _id: new ObjectId(id)})
+    //return getCollection().findOne({ _id: new ObjectId(id)})
+    return Task.findById(id).exec();
 }
 
 function create(newItem){
-    return getCollection().insertOne(newItem)
+    //return getCollection().insertOne(newItem)
+    const task = new Task(newItem)
+    return task.save();
 }
 
 /**
@@ -28,10 +33,13 @@ function create(newItem){
  */
 
 function updateById(id, newItem) {
-    return getCollection().updateOne(
+    newItem.updatedAt = Date.now()
+    return Task.findByIdAndUpdate(id, newItem, {new: true}).exec();
+
+    /*return getCollection().updateOne(
         { _id: new ObjectId(id) },
         { $set: newItem }
-    )
+    )*/
 }
 
 /**
@@ -40,7 +48,8 @@ function updateById(id, newItem) {
  */
 
 function deleteById(id){
-    return getCollection().deleteOne({ _id: new ObjectId(id) })
+    //return getCollection().deleteOne({ _id: new ObjectId(id) })
+    return Task.findByIdAndDelete(id).exec();
 }
 
 module.exports = {
