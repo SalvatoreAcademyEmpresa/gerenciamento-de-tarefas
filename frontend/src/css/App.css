@@ -1,0 +1,58 @@
+/* Reset CSS */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  background-color: #ffffff;
+  color: #333;
+  margin: 0;
+  padding: 0;
+}
+
+ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+li {
+  list-style-type: none;
+}
+
+/* Estilos Globais */
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.container {
+  width: 100%;
+  padding: 10%;
+}
+
+@media (max-width: 600px) {
+  .container {
+    padding: 5%;
+  }
+}
+
+.responsiveImage {
+  max-width: 100%;
+  height: auto;
+}
+
+.button {
+  padding: 10px 20px;
+  font-size: 16px;
+}
+
+@media (max-width: 600px) {
+  .button {
+    font-size: 14px;
+    padding: 8px 16px;
+  }
+}

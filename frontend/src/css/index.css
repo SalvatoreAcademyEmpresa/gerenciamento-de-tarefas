@@ -12,7 +12,7 @@ input {
   padding: 10px;
   font-size: 16px;
   border-radius: 5px;
-  border: 1px solid #d0d5dd;
+  border: 1px solid #6c6e72;
   margin-right: 10px;
 }
 
@@ -24,8 +24,4 @@ button {
   border: none;
   border-radius: 5px;
   cursor: pointer;
-}
-
-button:hover {
-  background-color: #1d2939;
 }

@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import "../css/TaskForm.css";
 
 const TaskForm = ({ onAdd }) => {
   const [newTodo, setNewTodo] = useState("");
@@ -13,6 +14,7 @@ const TaskForm = ({ onAdd }) => {
   return (
     <div className="todo-input-container">
       <div className="todo-checkbox"></div>
+
       <input
         type="text"
         className="todo-input"
@@ -20,6 +22,7 @@ const TaskForm = ({ onAdd }) => {
         value={newTodo}
         onChange={(e) => setNewTodo(e.target.value)}
       />
+
       {newTodo && (
         <button className="add-button" onClick={addTodo}>
           Add
