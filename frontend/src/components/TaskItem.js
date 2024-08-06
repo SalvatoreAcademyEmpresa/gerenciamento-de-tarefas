@@ -69,6 +69,7 @@ const TaskItem = ({
   };
 
   const handleReminderClick = () => {
+    // TODO: Implementar integração com calendário
     window.location.href = "https://calendar.google.com/calendar/u/0/r";
   };
 
