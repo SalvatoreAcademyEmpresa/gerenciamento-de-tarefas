@@ -2,14 +2,24 @@
   "name": "backend",
   "version": "1.0.0",
   "main": "index.js",
-  "scripts": {
-    "start": "node ."
-  },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "description": "",
+  "scripts": {
+    "start": "node .",
+    "dev": "nodemon .",
+    "test": "jest"
+  },
   "dependencies": {
-    "express": "^4.19.2"
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2",
+    "mongoose": "^8.5.2"
+  },
+  "devDependencies": {
+    "jest": "^29.7.0",
+    "mongodb-memory-server": "^10.0.0",
+    "nodemon": "^3.1.4",
+    "supertest": "^7.0.0"
   }
 }
