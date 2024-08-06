@@ -5,9 +5,9 @@ import "../css/TodoList.css";
 import TaskForm from "./TaskForm";
 import TaskItem from "./TaskItem";
 import "../css/Modal.css";
-import deleteSound from "../assets/audio/delete_sound.mp3"; // Importe o som de Remove
-import clickSound from "../assets/audio/click-som.mp3"; // Importe o som de click do checkbox
-import addSound from "../assets/audio/add-som.mp3"; // Importe o som de adicionar
+import deleteSound from "../assets/audio/delete_sound.mp3";
+import clickSound from "../assets/audio/click-som.mp3";
+import addSound from "../assets/audio/add-som.mp3";
 
 const TodoList = () => {
   const [todos, setTodos] = useState([
@@ -26,14 +26,14 @@ const TodoList = () => {
   const [editingTitle, setEditingTitle] = useState(title);
   const [showModal, setShowModal] = useState(false);
   const [indexToRemove, setIndexToRemove] = useState(null);
-  
+
   const audioDeleteRef = useRef(new Audio(deleteSound));
   const audioClickRef = useRef(new Audio(clickSound));
-  const audioAddRef = useRef(new Audio(addSound)); // Referência ao som de adicionar
+  const audioAddRef = useRef(new Audio(addSound));
 
   const addTodo = (newTodo) => {
     setTodos([...todos, { text: newTodo, completed: false }]);
-    audioAddRef.current.play(); // Reproduz o som de adicionar
+    audioAddRef.current.play();
   };
 
   const removeTodo = (index) => {
@@ -41,7 +41,7 @@ const TodoList = () => {
     setTodos(updatedTodos);
     setEditingIndex(null);
     setIsEditing(false);
-    audioDeleteRef.current.play(); // Reproduz o som de exclusão
+    audioDeleteRef.current.play();
   };
 
   const saveTitleEdit = () => {
@@ -63,7 +63,7 @@ const TodoList = () => {
     setTodos(updatedTodos);
     setEditingIndex(null);
     setIsEditing(false);
-    audioAddRef.current.play(); // Reproduz o som de adicionar ao salvar
+    audioAddRef.current.play();
   };
 
   const toggleTodoCompletion = (index) => {
@@ -71,7 +71,6 @@ const TodoList = () => {
     updatedTodos[index].completed = !updatedTodos[index].completed;
     setTodos(updatedTodos);
 
-    // Reproduz o som de clique ao marcar ou desmarcar o checkbox
     audioClickRef.current.play();
   };
 
@@ -102,18 +101,17 @@ const TodoList = () => {
   };
 
   const addReminder = (index) => {
-    // Função para adicionar um lembrete para uma tarefa específica
+    // TODO: Função para adicionar um lembrete para uma tarefa específica
     alert(`Reminder added for task: ${todos[index].text}`);
   };
 
   return (
     <DndProvider backend={HTML5Backend}>
       <div className="todo-container">
-
         <header className="todo-header">
           {isEditing && <div className="editing-indicator">Editing...</div>}
-          {isEditingTitle ? (
 
+          {isEditingTitle ? (
             <input
               type="text"
               value={editingTitle}
@@ -127,12 +125,10 @@ const TodoList = () => {
               className="edit-title-input"
               autoFocus
             />
-
           ) : (
             <h1 className="todo-title" onClick={() => setIsEditingTitle(true)}>
               {title}
             </h1>
-
           )}
 
           <div className="controls-tasks">
@@ -149,7 +145,6 @@ const TodoList = () => {
 
           {editingIndex !== null && (
             <div className="controls-remove">
-              
               <p
                 className="remove"
                 onClick={() => {
@@ -161,13 +156,11 @@ const TodoList = () => {
                 Remove
               </p>
             </div>
-
           )}
         </header>
 
         <ul className="todo-list">
           {todos.map((todo, index) => (
-
             <TaskItem
               key={index}
               index={index}
@@ -179,29 +172,29 @@ const TodoList = () => {
               toggleTodoCompletion={toggleTodoCompletion}
               saveEdit={saveEdit}
               removeTodo={removeTodo}
-              addReminder={addReminder} // Passando a função para o TaskItem
+              addReminder={addReminder}
             />
           ))}
         </ul>
-        
-        <TaskForm onAdd={addTodo} />
-        {isEditing && (
 
+        <TaskForm onAdd={addTodo} />
+
+        {isEditing && (
           <button
             className="save-button"
             onClick={() => saveEdit(editingIndex, todos[editingIndex].text)}
           >
             Save
           </button>
-
         )}
-        {showModal && (
 
+        {showModal && (
           <div className="modal-overlay" onClick={cancelRemove}>
             <div className="modal-content">
               <div className="modal-title">
                 Are you sure you want to remove this?
               </div>
+
               <div className="modal-actions">
                 <button className="close-button" onClick={confirmRemove}>
                   Remove
@@ -209,7 +202,6 @@ const TodoList = () => {
               </div>
             </div>
           </div>
-
         )}
       </div>
     </DndProvider>

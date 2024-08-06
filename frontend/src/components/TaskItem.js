@@ -26,10 +26,11 @@ const TaskItem = ({
   const [editingText, setEditingText] = useState(todo.text);
   const [showDetails, setShowDetails] = useState(false);
   const [showCommentIcon, setShowCommentIcon] = useState(false);
-  const [isCommentIconDisabled] = useState(true); // Estado para controlar o ícone de comentário desabilitado
-  const [isClicked, setIsClicked] = useState(false); // Estado para controlar se a tarefa está clicada
+  const [isCommentIconDisabled] = useState(true);
+  const [isClicked, setIsClicked] = useState(false);
 
   const isCurrentEditing = editingIndex === index;
+
   const [{ isDragging }, ref] = useDrag({
     type: ItemType,
     item: { index },
@@ -72,28 +73,30 @@ const TaskItem = ({
   };
 
   const handleClick = () => {
-    setIsClicked(true); // Define a tarefa como clicada
-    setTimeout(() => setIsClicked(false), 100); // Reseta o estado após 100ms
+    setIsClicked(true);
+    setTimeout(() => setIsClicked(false), 100);
   };
 
   return (
     <>
       <li
         ref={(node) => ref(drop(node))}
-        className={`todo-item ${isClicked ? "clicked" : ""}`} // Adiciona a classe quando a tarefa está clicada
+        className={`todo-item ${isClicked ? "clicked" : ""}`}
         style={{ opacity: isDragging ? 0.5 : 1 }}
         onMouseEnter={() => setShowCommentIcon(true)}
         onMouseLeave={() => setShowCommentIcon(false)}
-        onClick={handleClick} // Adiciona o manipulador de clique
+        onClick={handleClick}
       >
         <div className="todo-content">
           <img src={moveIcon} alt="Move Icon" className="move-icon" />
+
           <div className="todo-checkbox">
             <input
               type="checkbox"
               checked={todo.completed}
               onChange={() => toggleTodoCompletion(index)}
             />
+
             <div className="custom-checkbox"></div>
           </div>
 
@@ -116,6 +119,7 @@ const TaskItem = ({
               {todo.text}
             </div>
           )}
+
           {showCommentIcon && (
             <>
               <FontAwesomeIcon
@@ -146,8 +150,10 @@ const TaskItem = ({
             </>
           )}
         </div>
+
         {isCurrentEditing && <div className="todo-actions"></div>}
       </li>
+
       {showDetails && <TaskDetails task={todo} onClose={toggleDetails} />}
     </>
   );

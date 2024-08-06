@@ -10,6 +10,7 @@ const CommentList = ({ task, onClose }) => {
   const [activeCommentIndex, setActiveCommentIndex] = useState(null);
 
   const users = ["Alice", "Bob", "Charlie"];
+
   const getRandomUser = () => users[Math.floor(Math.random() * users.length)];
 
   const handleAddComment = (comment, index) => {
@@ -18,6 +19,7 @@ const CommentList = ({ task, onClose }) => {
       user: comments.length === 0 ? "Jordan" : getRandomUser(),
       replies: [],
     };
+
     let updatedComments;
     if (index !== null) {
       updatedComments = [...comments];
@@ -25,6 +27,7 @@ const CommentList = ({ task, onClose }) => {
     } else {
       updatedComments = [...comments, newCommentObject];
     }
+
     setComments(updatedComments);
     task.comments = updatedComments;
   };
@@ -45,6 +48,7 @@ const CommentList = ({ task, onClose }) => {
         <div className="task-details-header-content">
           <h3>{task.title}</h3>
         </div>
+
         <div className="task-details-icons">
           <FontAwesomeIcon
             icon={faTimes}
@@ -53,6 +57,7 @@ const CommentList = ({ task, onClose }) => {
           />
         </div>
       </div>
+
       <div className="task-details-content">
         <p>{task.description}</p>
       </div>
@@ -65,8 +70,10 @@ const CommentList = ({ task, onClose }) => {
                 <span className="user-icon">{comment.user[0]}</span>
                 <span className="user-name">{comment.user}</span>
               </div>
+
               <div className="comment-text">{comment.text}</div>
             </div>
+
             {comment.replies && comment.replies.length > 0 && (
               <div className="replies-list">
                 {comment.replies.map((reply, replyIndex) => (
@@ -75,6 +82,7 @@ const CommentList = ({ task, onClose }) => {
                       <span className="user-icon">{reply.user[0]}</span>
                       <span className="user-name">{reply.user}</span>
                     </div>
+
                     <div className="comment-text">{reply.text}</div>
                   </div>
                 ))}
@@ -85,7 +93,10 @@ const CommentList = ({ task, onClose }) => {
       </div>
 
       <div className="task-details-actions">
-        <button className="add-reminder" onClick={openGoogleReminder}>Add reminder</button>
+        <button className="add-reminder" onClick={openGoogleReminder}>
+          Add reminder
+        </button>
+
         <FontAwesomeIcon
           icon={faComment}
           className="task-details-icon"

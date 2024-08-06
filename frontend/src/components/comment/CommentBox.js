@@ -13,14 +13,17 @@ const CommentBox = ({ onAddComment, index, onClose }) => {
     }
   };
 
-  const handleClickOutside = useCallback((event) => {
-    if (
-      commentBoxRef.current &&
-      !commentBoxRef.current.contains(event.target)
-    ) {
-      onClose();
-    }
-  }, [onClose]);
+  const handleClickOutside = useCallback(
+    (event) => {
+      if (
+        commentBoxRef.current &&
+        !commentBoxRef.current.contains(event.target)
+      ) {
+        onClose();
+      }
+    },
+    [onClose]
+  );
 
   useEffect(() => {
     document.addEventListener("mousedown", handleClickOutside);
@@ -38,6 +41,7 @@ const CommentBox = ({ onAddComment, index, onClose }) => {
             onChange={(e) => setNewComment(e.target.value)}
             placeholder="Write a comment here..."
           />
+
           <button onClick={handleAddComment}>Comment</button>
         </div>
       </div>
