@@ -1,23 +1,25 @@
 const mongoose = require('mongoose');
-//const { MongoClient } = require('mongodb')
 
-const dbUrl = process.env.DATABASE_mongo
-//const dbName = 'mongo_todo_list'
-//const client = new MongoClient(dbUrl)
+const dbUrl = process.env.DATABASE_mongo;
 
-async function connectToDatabase(){
-    console.log("Conectando ao banco de dados")
-    await mongoose.connect(dbUrl, {useNewUrlParser: true, useUnifiedTopology: true})
-    //await client.connect()
-    console.log("Banco de dados conectado com sucesso!")
+async function connectToDatabase() {
+    try {
+        console.log("Conectando ao banco de dados");
+        await mongoose.connect(dbUrl, {
+            // Opções deprecated removidas
+        });
+        console.log("Banco de dados conectado com sucesso!");
+    } catch (error) {
+        console.error("Erro ao conectar ao banco de dados:", error);
+        throw error; // Lança o erro para que possa ser tratado fora da função
+    }
 }
 
-function getDatabase(){
-    //return client.db(dbName)
-    return mongoose.connection
+function getDatabase() {
+    return mongoose.connection;
 }
 
 module.exports = {
     connectToDatabase,
     getDatabase
-}
+};

@@ -1,55 +1,43 @@
-const Task = require('../db/task.model')
-//const { ObjectId } = require('mongodb')
-//const { getDatabase } = require('../db/database-connection')
-
-/*function getCollection() {
-    return getDatabase().collection('tarefas')
-}*/
+const Task = require('../db/task.model');
 
 function readAll() {
-    //return getCollection().find().toArray()
-    return Task.find.exec();
+    // Retorna todas as tarefas
+    return Task.find(); // Removido o `.exec()`, pois `find()` já retorna uma Promise
 }
 
 /**
  * @param {string} id
  * @returns
  */
-
 function readById(id){
-    //return getCollection().findOne({ _id: new ObjectId(id)})
-    return Task.findById(id).exec();
+    // Retorna uma tarefa pelo ID
+    return Task.findById(id); // Removido o `.exec()`, pois `findById()` já retorna uma Promise
 }
 
 function create(newItem){
-    //return getCollection().insertOne(newItem)
-    const task = new Task(newItem)
-    return task.save();
+    // Cria uma nova tarefa e a salva
+    const task = new Task(newItem);
+    return task.save(); // `save()` já retorna uma Promise
 }
 
 /**
  * @param {string} id
+ * @param {Object} newItem
  * @returns
  */
-
 function updateById(id, newItem) {
-    newItem.updatedAt = Date.now()
-    return Task.findByIdAndUpdate(id, newItem, {new: true}).exec();
-
-    /*return getCollection().updateOne(
-        { _id: new ObjectId(id) },
-        { $set: newItem }
-    )*/
+    newItem.updatedAt = Date.now();
+    // Atualiza uma tarefa pelo ID e retorna o documento atualizado
+    return Task.findByIdAndUpdate(id, newItem, { new: true }); // Removido o `.exec()`, pois `findByIdAndUpdate()` já retorna uma Promise
 }
 
 /**
  * @param {string} id
  * @returns
  */
-
 function deleteById(id){
-    //return getCollection().deleteOne({ _id: new ObjectId(id) })
-    return Task.findByIdAndDelete(id).exec();
+    // Deleta uma tarefa pelo ID
+    return Task.findByIdAndDelete(id); // Removido o `.exec()`, pois `findByIdAndDelete()` já retorna uma Promise
 }
 
 module.exports = {
@@ -58,4 +46,4 @@ module.exports = {
     create,
     updateById,
     deleteById
-}
+};
