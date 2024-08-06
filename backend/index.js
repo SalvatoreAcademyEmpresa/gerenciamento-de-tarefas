@@ -21,6 +21,4 @@ async function main() {
   });
 }
 
-// Código organizado com MVC
-
 main();
