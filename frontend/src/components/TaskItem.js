@@ -10,6 +10,7 @@ import {
 import "../css/TaskItem.css";
 import TaskDetails from "../components/comment/CommentList";
 import moveIcon from "../assets/img/move-icon.png";
+import { buildApiDeleteRequest, API_URL } from "../api/api";
 
 const ItemType = "TODO";
 
@@ -22,6 +23,7 @@ const TaskItem = ({
   removeTodo,
   moveTodo,
   toggleTodoCompletion,
+  saveEdit,
 }) => {
   const [editingText, setEditingText] = useState(todo.text);
   const [showDetails, setShowDetails] = useState(false);
@@ -64,6 +66,14 @@ const TaskItem = ({
     setIsEditing(true);
   };
 
+  const handleSaveEdit = () => {
+    if (editingText.trim()) {
+      saveEdit(index, editingText);
+      setEditingIndex(null);
+      setIsEditing(false);
+    }
+  };
+
   const toggleDetails = () => {
     setShowDetails(!showDetails);
   };
@@ -78,6 +88,15 @@ const TaskItem = ({
     setTimeout(() => setIsClicked(false), 100);
   };
 
+  const handleDelete = async () => {
+    try {
+      await buildApiDeleteRequest(`${API_URL}/${todo._id}`);
+      removeTodo(index);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   return (
     <>
       <li
@@ -90,14 +109,12 @@ const TaskItem = ({
       >
         <div className="todo-content">
           <img src={moveIcon} alt="Move Icon" className="move-icon" />
-
           <div className="todo-checkbox">
             <input
               type="checkbox"
               checked={todo.completed}
               onChange={() => toggleTodoCompletion(index)}
             />
-
             <div className="custom-checkbox"></div>
           </div>
 
@@ -121,35 +138,37 @@ const TaskItem = ({
             </div>
           )}
 
-          {showCommentIcon && (
-            <>
-              <FontAwesomeIcon
-                icon={faComment}
-                className={`comment-icon ${
-                  isCommentIconDisabled ? "disabled" : ""
-                }`}
-                onClick={!isCommentIconDisabled ? toggleDetails : undefined}
-              />
+          <div className="todo-actions">
+            {showCommentIcon && (
+              <>
+                <FontAwesomeIcon
+                  icon={faComment}
+                  className={`comment-icon ${
+                    isCommentIconDisabled ? "disabled" : ""
+                  }`}
+                  onClick={!isCommentIconDisabled ? toggleDetails : undefined}
+                />
 
-              <FontAwesomeIcon
-                icon={faCalendar}
-                className="reminder-icon"
-                onClick={handleReminderClick}
-              />
+                <FontAwesomeIcon
+                  icon={faCalendar}
+                  className="reminder-icon"
+                  onClick={handleReminderClick}
+                />
 
-              <FontAwesomeIcon
-                icon={faEdit}
-                className="edit-icon"
-                onClick={startEditing}
-              />
+                <FontAwesomeIcon
+                  icon={faEdit}
+                  className="edit-icon"
+                  onClick={startEditing}
+                />
 
-              <FontAwesomeIcon
-                icon={faTrashAlt}
-                className="remove-icon"
-                onClick={() => removeTodo(index)}
-              />
-            </>
-          )}
+                <FontAwesomeIcon
+                  icon={faTrashAlt}
+                  className="remove-icon"
+                  onClick={handleDelete}
+                />
+              </>
+            )}
+          </div>
         </div>
 
         {isCurrentEditing && <div className="todo-actions"></div>}
