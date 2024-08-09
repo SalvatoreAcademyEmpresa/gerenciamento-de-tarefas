@@ -1,12 +1,21 @@
+:root {
+  --base-font-size: 16px;
+}
+
 .todo-item {
   display: flex;
   align-items: center;
-  padding: 10px;
+  padding: 0.625rem;
   background-color: white;
   border: 1px solid white;
-  border-radius: 4px;
-  margin-bottom: -15px;
+  border-radius: 0.25rem;
+  margin-bottom: -0.9375rem;
   opacity: 1;
+  transition: transform 0.2s ease-in-out;
+}
+
+.todo-item.clicked {
+  transform: translateY(0.25rem);
 }
 
 .todo-content {
@@ -19,11 +28,11 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 20px;
-  height: 20px;
+  width: 1.25rem;
+  height: 1.25rem;
   border-radius: 50%;
   border: 1px solid #d0d5dd;
-  margin-right: 10px;
+  margin-right: 0.625rem;
   position: relative;
   background-color: #d0d5dd;
 }
@@ -31,8 +40,8 @@
 .todo-checkbox input[type="checkbox"] {
   opacity: 0;
   position: absolute;
-  width: 20px;
-  height: 20px;
+  width: 1.25rem;
+  height: 1.25rem;
   cursor: pointer;
 }
 
@@ -41,25 +50,25 @@
 }
 
 .todo-checkbox .custom-checkbox {
-  width: 20px;
-  height: 20px;
+  width: 1.25rem;
+  height: 1.25rem;
   border-radius: 50%;
   background-color: transparent;
 }
 
 .move-icon {
-  width: 20px;
-  height: 20px;
-  margin-right: 8px;
+  width: 1.25rem;
+  height: 1.25rem;
+  margin-right: 0.5rem;
 }
 
 .todo-text {
   flex-grow: 1;
-  font-size: 16px;
+  font-size: 1rem;
   color: #333;
   cursor: pointer;
   transition: text-decoration 0.2s ease-in-out;
-  padding: 10px;
+  padding: 0.625rem;
 }
 
 .todo-text.completed {
@@ -69,10 +78,10 @@
 
 .edit-input {
   flex-grow: 1;
-  padding: 10px;
-  font-size: 16px;
+  padding: 0.625rem;
+  font-size: 1rem;
   border: 1px solid #f2f4f7;
-  border-radius: 4px;
+  border-radius: 0.25rem;
 }
 
 .todo-actions {
@@ -85,20 +94,20 @@
   border: none;
   color: #98a2b3;
   cursor: pointer;
-  font-size: 14px;
+  font-size: 0.875rem;
   padding: 0;
-  margin-left: 10px;
+  margin-left: 0.625rem;
 }
 
 .editing-indicator {
   background-color: #344054;
   color: #fff;
-  padding: 5px 10px;
+  padding: 0.3125rem 0.625rem;
   border: 1px solid #344054;
-  border-radius: 35px;
+  border-radius: 2.1875rem;
   cursor: pointer;
-  font-size: 24px;
-  margin-bottom: 10px;
+  font-size: 1.5rem;
+  margin-bottom: 0.625rem;
 }
 
 .tasks-title {
@@ -106,17 +115,17 @@
   border: none;
   color: #98a2b3;
   cursor: pointer;
-  margin-left: -100px;
-  font-size: 14px;
-  padding: 10px;
+  margin-left: -6.25rem;
+  font-size: 0.875rem;
+  padding: 0.625rem;
 }
 
 .task-item {
-  padding: 10px;
+  padding: 0.625rem;
   border: 1px solid #ddd;
-  border-radius: 8px;
+  border-radius: 0.5rem;
   background: #fff;
-  margin-bottom: 10px;
+  margin-bottom: 0.625rem;
   cursor: pointer;
 }
 
@@ -124,36 +133,40 @@
   background: #f5f5f5;
 }
 
-.remove-icon {
-  margin-left: 8px;
-  color: #888;
-  cursor: pointer;
-}
-
+.remove-icon,
 .edit-icon,
 .comment-icon,
-.remove-icon {
-  margin-left: 8px;
-  color: #888;
+.reminder-icon {
+  width: 1.25rem;
+  height: 1.25rem;
+  margin-left: 0.5rem;
   cursor: pointer;
+  filter: invert(38%) sepia(6%) saturate(318%) hue-rotate(181deg)
+    brightness(90%) contrast(89%);
+}
+
+.remove-icon {
+  filter: invert(38%) sepia(6%) saturate(318%) hue-rotate(181deg)
+    brightness(90%) contrast(89%);
+}
+
+.edit-icon {
+  filter: invert(38%) sepia(6%) saturate(318%) hue-rotate(181deg)
+    brightness(90%) contrast(89%);
+}
+
+.comment-icon {
+  filter: invert(38%) sepia(6%) saturate(318%) hue-rotate(181deg)
+    brightness(90%) contrast(89%);
 }
 
 .reminder-icon {
-  margin-left: 8px;
-  color: #888;
-  cursor: pointer;
+  filter: invert(38%) sepia(6%) saturate(318%) hue-rotate(181deg)
+    brightness(90%) contrast(89%);
 }
 
 .comment-icon.disabled {
   color: #dcdbdb;
   cursor: not-allowed;
   pointer-events: none;
-}
-
-.todo-item {
-  transition: transform 0.2s ease-in-out;
-}
-
-.todo-item.clicked {
-  transform: translateY(4px);
 }
