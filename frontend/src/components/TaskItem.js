@@ -1,15 +1,12 @@
 import React, { useRef, useEffect, useState } from "react";
 import { useDrag, useDrop } from "react-dnd";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faTrashAlt,
-  faEdit,
-  faCalendar,
-  faComment,
-} from "@fortawesome/free-solid-svg-icons";
 import "../css/TaskItem.css";
 import TaskDetails from "../components/comment/CommentList";
-import moveIcon from "../assets/img/move-icon.png";
+import moveIcon from "../assets/img/move-icon.svg";
+import chatIcon from "../assets/img/chat.svg";
+import calendarIcon from "../assets/img/calendar.svg";
+import editIcon from "../assets/img/edit-icon.svg";
+import binIcon from "../assets/img/bin.svg";
 
 const ItemType = "TODO";
 
@@ -123,28 +120,32 @@ const TaskItem = ({
 
           {showCommentIcon && (
             <>
-              <FontAwesomeIcon
-                icon={faComment}
+              <img
+                src={chatIcon}
+                alt="Comment Icon"
                 className={`comment-icon ${
                   isCommentIconDisabled ? "disabled" : ""
                 }`}
                 onClick={!isCommentIconDisabled ? toggleDetails : undefined}
               />
 
-              <FontAwesomeIcon
-                icon={faCalendar}
+              <img
+                src={calendarIcon}
+                alt="Reminder Icon"
                 className="reminder-icon"
                 onClick={handleReminderClick}
               />
 
-              <FontAwesomeIcon
-                icon={faEdit}
+              <img
+                src={editIcon}
+                alt="Edit Icon"
                 className="edit-icon"
                 onClick={startEditing}
               />
 
-              <FontAwesomeIcon
-                icon={faTrashAlt}
+              <img
+                src={binIcon}
+                alt="Remove Icon"
                 className="remove-icon"
                 onClick={() => removeTodo(index)}
               />
