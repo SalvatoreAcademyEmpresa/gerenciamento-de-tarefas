@@ -1,7 +1,15 @@
 import React, { useState } from "react";
 import "../css/Header.css";
+import menuIcon from "../assets/img/menu.svg";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faUserCircle } from "@fortawesome/free-solid-svg-icons";
+import {
+  faUserCircle,
+  faSearch,
+  faInbox,
+  faCalendarDay,
+  faClock,
+  faTags,
+} from "@fortawesome/free-solid-svg-icons";
 
 const Header = () => {
   const [isExpanded, setIsExpanded] = useState(false);
@@ -14,28 +22,53 @@ const Header = () => {
     <div>
       <nav className="header">
         <button className="menu-toggle" onClick={toggleMenu}>
-          <svg width="24" height="24" viewBox="0 0 24 24">
-            <path
-              fill="black"
-              d={
-                isExpanded
-                  ? "M19 13H5v-2h14v2z"
-                  : "M3 6h18v2H3V6zm0 5h18v2H3v-2zm0 5h18v2H3v-2z"
-              }
-            />
-          </svg>
+          <img src={menuIcon} alt="Menu Icon" className="menu-icon" />
         </button>
 
-        <div className="header-title">Todo List v0.8</div>
+        <div className="header-title">Todo List v1.0</div>
       </nav>
 
       <aside className={`side-menu ${isExpanded ? "expanded" : ""}`}>
         <div className="user-profile">
-          <FontAwesomeIcon icon={faUserCircle} size="2x" />
+          <FontAwesomeIcon icon={faUserCircle} size="3x" />
+          <span className="user-name">User</span>
+        </div>
+
+        <ul className="menu-items">
+          <li>
+            <button className="add-task-button">
+              <FontAwesomeIcon icon={faInbox} /> Add task
+            </button>
+          </li>
+          <li>
+            <FontAwesomeIcon icon={faSearch} />
+            <span>Search</span>
+          </li>
+          <li>
+            <FontAwesomeIcon icon={faInbox} />
+            <span>Inbox</span>
+          </li>
+          <li>
+            <FontAwesomeIcon icon={faCalendarDay} />
+            <span>Reminder</span>
+          </li>
+          <li>
+            <FontAwesomeIcon icon={faClock} />
+            <span>Upcoming</span>
+          </li>
+          <li>
+            <FontAwesomeIcon icon={faTags} />
+            <span>Filters & Labels</span>
+          </li>
+        </ul>
+
+        <div className="projects-section">
+          <h3>My Projects</h3>
+          <ul className="projects-list">{/* TODO */}</ul>
         </div>
 
         <footer className="mini-footer">
-          <p>© 2024 Futuristic Todo List.</p>
+          <span>© 2024 Futuristic Todo List.</span>
         </footer>
       </aside>
     </div>
