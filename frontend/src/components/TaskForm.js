@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import "../css/TaskForm.css";
+import addIcon from "../assets/img/add-icon.svg";
 
 const TaskForm = ({ onAdd }) => {
   const [newTodo, setNewTodo] = useState("");
@@ -25,7 +26,7 @@ const TaskForm = ({ onAdd }) => {
 
       {newTodo && (
         <button className="add-button" onClick={addTodo}>
-          Add
+          <img src={addIcon} alt="Add" className="add-icon" />
         </button>
       )}
     </div>
