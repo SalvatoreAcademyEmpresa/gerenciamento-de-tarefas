@@ -1,6 +1,10 @@
+:root {
+  --base-font-size: 16px;
+}
+
 .header {
   background-color: transparent;
-  padding: -5px;
+  padding: 0;
   position: fixed;
   top: 0;
   left: 0;
@@ -12,7 +16,7 @@
 }
 
 .header-title {
-  margin: 10px;
+  margin: 0.625rem;
 }
 
 .menu-toggle {
@@ -25,10 +29,10 @@
   position: fixed;
   top: 0;
   left: 0;
-  width: 250px;
+  width: 15.625rem;
   height: 100%;
-  background-color: #FCFAF8;
-  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+  background-color: #fcfaf8;
+  box-shadow: 0.125rem 0 0.3125rem rgba(0, 0, 0, 0.1);
   transform: translateX(-100%);
   transition: transform 0.3s ease;
 }
@@ -39,24 +43,24 @@
 
 .side-menu ul {
   list-style: none;
-  padding: 10px;
+  padding: 0.625rem;
 }
 
 .side-menu li {
-  margin: 20px 0;
+  margin: 1.25rem 0;
 }
 
 .side-menu a {
   color: #333;
   text-decoration: none;
-  font-size: 13px;
+  font-size: 0.8125rem;
 }
 
 .user-profile {
   display: flex;
   justify-content: center;
-  margin-bottom: 20px;
-  transform: translateY(120%);
+  margin-bottom: 1.25rem;
+  transform: translateY(7.5rem);
 }
 
 .projects {
@@ -67,7 +71,7 @@
 
 .projects ul {
   list-style: none;
-  padding-left: 20px;
+  padding-left: 1.25rem;
   margin: 0;
 }
 
@@ -76,7 +80,7 @@
   bottom: 0;
   width: 100%;
   text-align: center;
-  padding: 10px 0;
+  padding: 0.625rem 0;
   background-color: #f1f1f1;
-  border-top: 1px solid #e1e1e1;
+  border-top: 0.0625rem solid #e1e1e1;
 }
