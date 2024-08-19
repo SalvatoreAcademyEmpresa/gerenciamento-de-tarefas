@@ -5,7 +5,7 @@ const createTaskSchema = Joi.object({
         'string.empty': 'O título não pode estar vazio.',
         'string.min': 'O título deve ter pelo menos 3 caracteres.',
         'any.required': 'O título é obrigatório.!',
-        'string.base': 'O título deve ser uma string.'
+        'string.base': 'O título deve ser uma string!!!'
     }),
     description: Joi.string().required().messages({
         'string.empty': 'Não se esqueça da description!',
