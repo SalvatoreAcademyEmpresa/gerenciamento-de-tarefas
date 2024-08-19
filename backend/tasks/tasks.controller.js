@@ -1,8 +1,8 @@
 const service = require("./tasks.service");
+const { createTaskSchema, updateTaskSchema } = require("./tasks.validation");
 
 async function readAll(req, res) {
   const items = await service.readAll();
-
   res.send(items);
 }
 
@@ -18,19 +18,40 @@ async function readById(req, res) {
 }
 
 async function create(req, res) {
-  const newItem = req.body;
+  /*const newItem = req.body;
 
   if (!newItem || !newItem.title) {
     return res.status(400).send("Não se esqueça do `title`!");
+  }*/
+  const { error, value } = createTaskSchema.validate(req.body);
+
+  if (error) {
+    return res.status(400).send(error.details.map(detail => detail.message).join(", "));
   }
 
-  await service.create(newItem);
-  res.status(201).send(newItem);
+  await service.create(value);
+  res.status(201).send(value);
+
+  /*await service.create(newItem);
+  res.status(201).send(newItem);*/
 }
 
 async function updateById(req, res) {
   const id = req.params.id;
-  const newItem = req.body;
+  const { error, value } = updateTaskSchema.validate(req.body);
+
+  if(error){
+    return res.status(400).send(error.details.map(detail => detail.message).join(", "));
+  }
+
+  const updatedItem = await service.updateById(id, value);
+
+  if(!updatedItem){
+    return res.status(404).send("Item não encontrado para atualização");
+  }
+  res.send(updatedItem)
+  
+  /*const newItem = req.body;
 
   if (!newItem || !newItem.title) {
     return res.status(400).send("Não se esqueça do `nome`!");
@@ -38,13 +59,18 @@ async function updateById(req, res) {
 
   await service.updateById(id, newItem);
 
-  res.send(newItem);
+  res.send(newItem);*/
 }
 
 async function deleteById(req, res) {
   const id = req.params.id;
+  const result = await service.deleteById(id);
 
-  await service.deleteById(id);
+  //await service.deleteById(id);
+
+  if(!result){
+    return res.status(404).send("Item não encontrado para exclusão!");
+  }
 
   res.send("Item removido com sucesso! " + id);
 }
