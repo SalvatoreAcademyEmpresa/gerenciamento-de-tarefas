@@ -1,5 +1,5 @@
 const service = require("./tasks.service");
-const { taskSchema } = require("./tasks.validation");
+const { createTaskSchema, updateTaskSchema } = require("./tasks.validation");
 
 async function readAll(req, res) {
   const items = await service.readAll();
@@ -23,7 +23,7 @@ async function create(req, res) {
   if (!newItem || !newItem.title) {
     return res.status(400).send("Não se esqueça do `title`!");
   }*/
-  const { error, value } = taskSchema.validate(req.body);
+  const { error, value } = createTaskSchema.validate(req.body);
 
   if (error) {
     return res.status(400).send(error.details.map(detail => detail.message).join(", "));
@@ -38,7 +38,7 @@ async function create(req, res) {
 
 async function updateById(req, res) {
   const id = req.params.id;
-  const { error, value } = taskSchema.validate(req.body);
+  const { error, value } = updateTaskSchema.validate(req.body);
 
   if(error){
     return res.status(400).send(error.details.map(detail => detail.message).join(", "));
