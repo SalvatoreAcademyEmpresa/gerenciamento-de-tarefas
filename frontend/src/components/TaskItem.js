@@ -28,7 +28,7 @@ const TaskItem = ({
   const [editingText, setEditingText] = useState(todo.text);
   const [showDetails, setShowDetails] = useState(false);
   const [showCommentIcon, setShowCommentIcon] = useState(false);
-  const [isCommentIconDisabled] = useState(true);
+  const [isCommentIconEnabled] = useState(true);
   const [isClicked, setIsClicked] = useState(false);
 
   const isCurrentEditing = editingIndex === index;
@@ -144,9 +144,9 @@ const TaskItem = ({
                 <FontAwesomeIcon
                   icon={faComment}
                   className={`comment-icon ${
-                    isCommentIconDisabled ? "disabled" : ""
+                    isCommentIconEnabled ? "disabled" : ""
                   }`}
-                  onClick={!isCommentIconDisabled ? toggleDetails : undefined}
+                  onClick={!isCommentIconEnabled ? toggleDetails : undefined}
                 />
 
                 <FontAwesomeIcon
