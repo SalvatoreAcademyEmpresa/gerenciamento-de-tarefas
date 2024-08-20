@@ -39,7 +39,7 @@ const TodoList = () => {
   const audioAddRef = useRef(new Audio(addSound));
 
   useEffect(() => {
-    const fetchTodos = async () => {
+    const fetchToDos = async () => {
       try {
         const data = await buildApiGetRequest(API_URL);
         setTodos(data);
@@ -47,7 +47,7 @@ const TodoList = () => {
         console.error(error);
       }
     };
-    fetchTodos();
+    fetchToDos();
   }, []);
 
   const addTodo = async (newTodo) => {
