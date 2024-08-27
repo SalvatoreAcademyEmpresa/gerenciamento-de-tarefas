@@ -1,6 +1,8 @@
 import React, { useState, useRef } from "react";
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import "../css/TodoList.css";
 import TaskForm from "./TaskForm";
 import TaskItem from "./TaskItem";
@@ -34,6 +36,7 @@ const TodoList = () => {
   const addTodo = (newTodo) => {
     setTodos([...todos, { text: newTodo, completed: false }]);
     audioAddRef.current.play();
+    toast.success("Tarefa adicionada com sucesso!");
   };
 
   const removeTodo = (index) => {
@@ -42,6 +45,7 @@ const TodoList = () => {
     setEditingIndex(null);
     setIsEditing(false);
     audioDeleteRef.current.play();
+    toast.error("Tarefa excluída com sucesso!");
   };
 
   const saveTitleEdit = () => {
@@ -64,6 +68,7 @@ const TodoList = () => {
     setEditingIndex(null);
     setIsEditing(false);
     audioAddRef.current.play();
+    toast.info("Tarefa editada com sucesso!");
   };
 
   const toggleTodoCompletion = (index) => {
@@ -101,13 +106,14 @@ const TodoList = () => {
   };
 
   const addReminder = (index) => {
-    // TODO: Função para adicionar um lembrete para uma tarefa específica
     alert(`Reminder added for task: ${todos[index].text}`);
   };
 
   return (
     <DndProvider backend={HTML5Backend}>
       <div className="todo-container">
+        <ToastContainer />
+
         <header className="todo-header">
           {isEditing && <div className="editing-indicator">Editing...</div>}
 
