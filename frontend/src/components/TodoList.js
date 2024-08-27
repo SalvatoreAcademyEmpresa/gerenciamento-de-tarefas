@@ -36,7 +36,7 @@ const TodoList = () => {
   const addTodo = (newTodo) => {
     setTodos([...todos, { text: newTodo, completed: false }]);
     audioAddRef.current.play();
-    toast.success("Tarefa adicionada com sucesso!");
+    toast.success("Task added successfully!");
   };
 
   const removeTodo = (index) => {
@@ -45,7 +45,7 @@ const TodoList = () => {
     setEditingIndex(null);
     setIsEditing(false);
     audioDeleteRef.current.play();
-    toast.error("Tarefa excluída com sucesso!");
+    toast.error("Task deleted successfully!");
   };
 
   const saveTitleEdit = () => {
@@ -68,7 +68,7 @@ const TodoList = () => {
     setEditingIndex(null);
     setIsEditing(false);
     audioAddRef.current.play();
-    toast.info("Tarefa editada com sucesso!");
+    toast.info("Task edited successfully!");
   };
 
   const toggleTodoCompletion = (index) => {
