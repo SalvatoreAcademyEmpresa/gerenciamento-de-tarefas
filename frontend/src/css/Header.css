@@ -5,6 +5,7 @@
 .header {
   background-color: transparent;
   padding: 0;
+  padding: 0.625rem;
   position: fixed;
   top: 0;
   left: 0;
@@ -13,21 +14,36 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+  height: 3.75rem;
 }
 
 .header-title {
+
   margin: 0.625rem;
+
+  font-size: 0.975rem;
+  color: #777;
+  text-align: right;
+  margin-right: 1.25rem;
 }
 
 .menu-toggle {
   background-color: transparent;
   border: none;
   cursor: pointer;
+  margin-left: 1.25rem;
+  padding: 0;
+}
+
+.menu-icon {
+  width: 1.5rem;
+  height: 1.5rem;
+  fill: #1d2939;
 }
 
 .side-menu {
   position: fixed;
-  top: 0;
+  top: 5rem;
   left: 0;
   width: 15.625rem;
   height: 100%;
@@ -35,11 +51,14 @@
   box-shadow: 0.125rem 0 0.3125rem rgba(0, 0, 0, 0.1);
   transform: translateX(-100%);
   transition: transform 0.3s ease;
+  background-color: #f2f4f7;
+  border-radius: 0.25rem;
 }
 
 .side-menu.expanded {
   transform: translateX(0);
 }
+
 
 .side-menu ul {
   list-style: none;
@@ -61,18 +80,80 @@
   justify-content: center;
   margin-bottom: 1.25rem;
   transform: translateY(7.5rem);
-}
 
-.projects {
-  justify-content: space-between;
+.user-profile {
+  display: flex;
+  flex-direction: column;
   align-items: center;
-  cursor: pointer;
+  padding: 1.25rem 0;
+  border-bottom: 0.0625rem solid #ddd;
 }
 
-.projects ul {
+.menu-items {
+  list-style: none;
+  padding: 0.625rem;
+  margin: 0;
+}
+
+.menu-items li {
+  display: flex;
+  align-items: center;
+  gap: 0.625rem;
+  background-color: transparent;
+  border: none;
+  color: #1d2939;
+  padding: 0.634rem;
+  cursor: pointer;
+  transition: color 0.3s ease;
+}
+
+.menu-items li:hover {
+  background-color: #f0f0f0;
+}
+
+.add-task-button {
+  display: flex;
+  align-items: center;
+  gap: 0.625rem;
+  background-color: transparent;
+  border: none;
+  color: #1d2939;
+  font-weight: bold;
+  cursor: pointer;
+  transition: color 0.3s ease;
+}
+
+.add-task-button:hover {
+  color: #fdb022;
+}
+
+.projects-section {
+  padding: 1.25rem;
+}
+
+.projects-section h3 {
+  margin-bottom: 0.625rem;
+  font-size: 1rem;
+  color: #333;
+}
+
+.projects-list {
   list-style: none;
   padding-left: 1.25rem;
+  padding: 0;
   margin: 0;
+}
+
+.projects-list li {
+  padding: 0.5rem 0;
+  font-size: 0.875rem;
+  color: #555;
+  cursor: pointer;
+  transition: color 0.3s ease;
+}
+
+.projects-list li:hover {
+  color: #333;
 }
 
 .mini-footer {
@@ -83,4 +164,16 @@
   padding: 0.625rem 0;
   background-color: #f1f1f1;
   border-top: 0.0625rem solid #e1e1e1;
+  padding: 5.625rem 0;
+  background-color: #f9f9f9;
+}
+
+.mini-footer span {
+  font-size: 0.875rem;
+  color: #777;
+}
+
+.mini-footer span:hover {
+  color: #555;
+  cursor: pointer;
 }

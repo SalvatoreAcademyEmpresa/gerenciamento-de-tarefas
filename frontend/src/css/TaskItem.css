@@ -170,3 +170,24 @@
   cursor: not-allowed;
   pointer-events: none;
 }
+
+.todo-item {
+  transition: transform 0.2s ease-in-out;
+}
+
+.todo-item.clicked {
+  transform: translateY(0.25rem);
+}
+
+::-webkit-scrollbar {
+  width: 0.5rem;
+}
+
+::-webkit-scrollbar-track {
+  background-color: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #1d2939;
+  border-radius: 50rem;
+}

@@ -2,11 +2,16 @@ import React, { useRef, useEffect, useState } from "react";
 import { useDrag, useDrop } from "react-dnd";
 import "../css/TaskItem.css";
 import TaskDetails from "../components/comment/CommentList";
+
 import moveIcon from "../assets/img/move-icon.svg";
 import chatIcon from "../assets/img/chat.svg";
 import calendarIcon from "../assets/img/calendar.svg";
 import editIcon from "../assets/img/edit-icon.svg";
 import binIcon from "../assets/img/bin.svg";
+
+import moveIcon from "../assets/img/move-icon.png";
+import { buildApiDeleteRequest, API_URL } from "../api/api";
+
 
 const ItemType = "TODO";
 
@@ -19,11 +24,12 @@ const TaskItem = ({
   removeTodo,
   moveTodo,
   toggleTodoCompletion,
+  saveEdit,
 }) => {
   const [editingText, setEditingText] = useState(todo.text);
   const [showDetails, setShowDetails] = useState(false);
   const [showCommentIcon, setShowCommentIcon] = useState(false);
-  const [isCommentIconDisabled] = useState(true);
+  const [isCommentIconEnabled] = useState(true);
   const [isClicked, setIsClicked] = useState(false);
 
   const isCurrentEditing = editingIndex === index;
@@ -61,6 +67,14 @@ const TaskItem = ({
     setIsEditing(true);
   };
 
+  const handleSaveEdit = () => {
+    if (editingText.trim()) {
+      saveEdit(index, editingText);
+      setEditingIndex(null);
+      setIsEditing(false);
+    }
+  };
+
   const toggleDetails = () => {
     setShowDetails(!showDetails);
   };
@@ -75,6 +89,15 @@ const TaskItem = ({
     setTimeout(() => setIsClicked(false), 100);
   };
 
+  const handleDelete = async () => {
+    try {
+      await buildApiDeleteRequest(`${API_URL}/${todo._id}`);
+      removeTodo(index);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   return (
     <>
       <li
@@ -87,14 +110,12 @@ const TaskItem = ({
       >
         <div className="todo-content">
           <img src={moveIcon} alt="Move Icon" className="move-icon" />
-
           <div className="todo-checkbox">
             <input
               type="checkbox"
               checked={todo.completed}
               onChange={() => toggleTodoCompletion(index)}
             />
-
             <div className="custom-checkbox"></div>
           </div>
 
@@ -117,6 +138,7 @@ const TaskItem = ({
               {todo.text}
             </div>
           )}
+
 
           {showCommentIcon && (
             <>
@@ -151,6 +173,39 @@ const TaskItem = ({
               />
             </>
           )}
+
+          <div className="todo-actions">
+            {showCommentIcon && (
+              <>
+                <FontAwesomeIcon
+                  icon={faComment}
+                  className={`comment-icon ${
+                    isCommentIconEnabled ? "disabled" : ""
+                  }`}
+                  onClick={!isCommentIconEnabled ? toggleDetails : undefined}
+                />
+
+                <FontAwesomeIcon
+                  icon={faCalendar}
+                  className="reminder-icon"
+                  onClick={handleReminderClick}
+                />
+
+                <FontAwesomeIcon
+                  icon={faEdit}
+                  className="edit-icon"
+                  onClick={startEditing}
+                />
+
+                <FontAwesomeIcon
+                  icon={faTrashAlt}
+                  className="remove-icon"
+                  onClick={handleDelete}
+                />
+              </>
+            )}
+          </div>
+
         </div>
 
         {isCurrentEditing && <div className="todo-actions"></div>}
