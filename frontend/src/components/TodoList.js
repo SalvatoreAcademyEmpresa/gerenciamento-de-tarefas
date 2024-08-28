@@ -1,6 +1,8 @@
 import React, { useState, useEffect, useRef } from "react";
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import "../css/TodoList.css";
 import TaskForm from "./TaskForm";
 import TaskItem from "./TaskItem";
@@ -53,6 +55,7 @@ const TodoList = () => {
   const addTodo = async (newTodo) => {
     const newTask = { text: newTodo, completed: false };
     audioAddRef.current.play();
+    toast.success("Task added successfully!");
 
     try {
       await buildApiPostRequest(API_URL, newTask);
@@ -63,6 +66,7 @@ const TodoList = () => {
       alert("Houve um erro ao adicionar a tarefa. Por favor, tente novamente.");
       setTodos([...todos, newTask]);
     }
+
   };
 
   const removeTodo = async (index) => {
@@ -72,6 +76,9 @@ const TodoList = () => {
     setEditingIndex(null);
     setIsEditing(false);
     audioDeleteRef.current.play();
+    
+    toast.error("Task deleted successfully!");
+  };
 
     try {
       await buildApiDeleteRequest(`${API_URL}/${todoId}`);
@@ -104,11 +111,14 @@ const TodoList = () => {
     setIsEditing(false);
     audioAddRef.current.play();
 
+    toast.info("Task edited successfully!");
+
     try {
       await buildApiPutRequest(`${API_URL}/${todoId}`, updatedTodo);
     } catch (error) {
       console.error(error);
     }
+
   };
 
   const toggleTodoCompletion = async (index) => {
@@ -156,13 +166,14 @@ const TodoList = () => {
   };
 
   const addReminder = (index) => {
-    // TODO: Função para adicionar um lembrete para uma tarefa específica
     alert(`Reminder added for task: ${todos[index].text}`);
   };
 
   return (
     <DndProvider backend={HTML5Backend}>
       <div className="todo-container">
+        <ToastContainer />
+
         <header className="todo-header">
           {isEditing && <div className="editing-indicator">Editing...</div>}
           {isEditingTitle ? (
