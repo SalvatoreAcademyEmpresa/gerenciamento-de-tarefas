@@ -66,7 +66,6 @@ const TodoList = () => {
       alert("Houve um erro ao adicionar a tarefa. Por favor, tente novamente.");
       setTodos([...todos, newTask]);
     }
-
   };
 
   const removeTodo = async (index) => {
@@ -76,9 +75,8 @@ const TodoList = () => {
     setEditingIndex(null);
     setIsEditing(false);
     audioDeleteRef.current.play();
-    
+
     toast.error("Task deleted successfully!");
-  };
 
     try {
       await buildApiDeleteRequest(`${API_URL}/${todoId}`);
@@ -118,7 +116,6 @@ const TodoList = () => {
     } catch (error) {
       console.error(error);
     }
-
   };
 
   const toggleTodoCompletion = async (index) => {
@@ -169,6 +166,11 @@ const TodoList = () => {
     alert(`Reminder added for task: ${todos[index].text}`);
   };
 
+  const handleTitleEdit = () => {
+    setTitle(editingTitle);
+    setIsEditingTitle(false);
+  };
+
   return (
     <DndProvider backend={HTML5Backend}>
       <div className="todo-container">
@@ -181,10 +183,10 @@ const TodoList = () => {
               type="text"
               value={editingTitle}
               onChange={(e) => setEditingTitle(e.target.value)}
-              onBlur={() => setIsEditingTitle(false)}
+              onBlur={handleTitleEdit}
               onKeyDown={(e) => {
                 if (e.key === "Enter") {
-                  setIsEditingTitle(false);
+                  handleTitleEdit();
                 }
               }}
               className="edit-title-input"
