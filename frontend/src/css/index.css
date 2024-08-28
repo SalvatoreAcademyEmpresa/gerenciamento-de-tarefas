@@ -16,7 +16,7 @@ input {
   margin-right: 10px;
 }
 
-button {
+/* TODO: button {
   background-color: #98a2b3;
   color: #fff;
   padding: 10px;
@@ -24,4 +24,4 @@ button {
   border: none;
   border-radius: 5px;
   cursor: pointer;
-}
+} */
