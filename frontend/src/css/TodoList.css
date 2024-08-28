@@ -1,7 +1,11 @@
+:root {
+  --base-font-size: 16px;
+}
+
 .todo-container {
-  max-width: 500px;
+  max-width: 31.25rem;
   margin: 0 auto;
-  padding: 50px;
+  padding: 3.125rem;
 }
 
 .todo-header {
@@ -12,39 +16,38 @@
 }
 
 .todo-title {
-  font-size: 34px;
+  font-size: 2.125rem;
   font-weight: bold;
   cursor: pointer;
-  margin-bottom: 50px;
+  margin-bottom: 3.125rem;
   display: inline-block;
 }
 
 .controls-edit {
   display: flex;
-  font-size: 14px;
+  font-size: 0.875rem;
   cursor: pointer;
   position: absolute;
-  left: 450px;
+  left: 28.125rem;
   top: 80%;
   transform: translateY(-50%);
 }
 
 .controls-remove {
   display: flex;
-  font-size: 14px;
+  font-size: 0.875rem;
   cursor: pointer;
   position: absolute;
-  left: 390px;
+  left: 24.375rem;
   top: 80%;
   transform: translateY(-50%);
 }
 
 .controls-tasks {
   display: flex;
-  font-size: 14px;
+  font-size: 0.875rem;
   cursor: pointer;
   position: absolute;
   top: 80%;
-  transform: translateY(-50%);
-  transform: translateX(-4%);
+  transform: translateY(-50%) translateX(-4%);
 }

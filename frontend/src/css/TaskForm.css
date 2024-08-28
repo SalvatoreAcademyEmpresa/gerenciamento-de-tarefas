@@ -1,44 +1,58 @@
+:root {
+  --base-font-size: 16px;
+}
+
 .todo-input-container {
   display: flex;
   align-items: center;
-  margin-top: 10px;
-  padding: 10px;
+  margin-top: 0.625rem;
+  padding: 0.625rem;
   background-color: white;
-  border: 1px solid white;
-  border-radius: 4px;
-  margin-bottom: 10px;
+  border: 0.0625rem solid white;
+  border-radius: 0.25rem;
+  margin-bottom: 0.625rem;
 }
 
 .todo-input {
   flex-grow: 1;
-  padding: 10px;
-  font-size: 16px;
-  border: 1px solid white;
-  border-radius: 4px;
-  margin-right: 10px;
+  padding: 0.625rem;
+  font-size: 1rem;
+  border: 0.0625rem solid white;
+  border-radius: 0.25rem;
+  margin-right: 0.625rem;
 }
 
 .add-button {
-  padding: 10px;
-  font-size: 16px;
+  display: flex;
+  align-items: center;
+  padding: 0.625rem;
+  font-size: 1rem;
   border: none;
-  border-radius: 4px;
-  background-color: #98a2b3;
+  border-radius: 0.25rem;
+  background-color: transparent;
   color: #f2f4f7;
   cursor: pointer;
 }
 
+.add-icon {
+  width: 1.25rem;
+  height: 1.25rem;
+  margin-left: 0.5rem;
+  filter: invert(34%) sepia(5%) saturate(173%) hue-rotate(189deg)
+  brightness(92%) contrast(88%);
+}
+
 .save-button {
   display: block;
-  margin: 20px auto;
-  padding: 10px 20px;
-  width: 100px;
-  height: 100px;
-  font-size: 16px;
+  margin: 1.25rem auto;
+  padding: 0.625rem 1.25rem;
+  width: 6.25rem;
+  height: 6.25rem;
+  font-size: 1rem;
   background-color: #1d2939;
   color: #fff;
   border: none;
-  border-radius: 140px;
+  border-radius: 8.75rem;
   cursor: pointer;
 }
 
@@ -47,10 +61,10 @@
   border: none;
   color: #98a2b3;
   cursor: pointer;
-  margin-right: 5px;
-  font-size: 14px;
-  padding: 10px;
-  transform: translateY(-25%);
+  margin-right: 0.3125rem;
+  font-size: 0.875rem;
+  padding: 0.625rem;
+  transform: translateY(-0.25rem);
 }
 
 .remove {
@@ -58,7 +72,7 @@
   border: none;
   color: #98a2b3;
   cursor: pointer;
-  margin-right: 5px;
-  font-size: 14px;
-  padding: 1px;
+  margin-right: 0.3125rem;
+  font-size: 0.875rem;
+  padding: 0.0625rem;
 }
