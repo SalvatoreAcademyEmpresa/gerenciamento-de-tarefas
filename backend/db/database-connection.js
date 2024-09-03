@@ -1,5 +1,4 @@
 const mongoose = require("mongoose");
-
 const dbUrl = process.env.DATABASE_URL;
 
 async function connectToDatabase() {
