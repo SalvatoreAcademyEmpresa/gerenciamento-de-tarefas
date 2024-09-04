@@ -9,6 +9,7 @@ import {
   faCalendarDay,
   faClock,
   faTags,
+  faTrashCan, // Importa o ícone correto
 } from "@fortawesome/free-solid-svg-icons";
 
 const Header = () => {
@@ -40,22 +41,32 @@ const Header = () => {
               <FontAwesomeIcon icon={faInbox} /> Add task
             </button>
           </li>
+
           <li>
             <FontAwesomeIcon icon={faSearch} />
             <span>Search</span>
           </li>
+
           <li>
             <FontAwesomeIcon icon={faInbox} />
             <span>Inbox</span>
           </li>
+
           <li>
             <FontAwesomeIcon icon={faCalendarDay} />
             <span>Reminder</span>
           </li>
+
+          <li>
+            <FontAwesomeIcon icon={faTrashCan} /> {/* Atualize o ícone aqui */}
+            <span>Bin</span>
+          </li>
+
           <li>
             <FontAwesomeIcon icon={faClock} />
             <span>Upcoming</span>
           </li>
+
           <li>
             <FontAwesomeIcon icon={faTags} />
             <span>Filters & Labels</span>
@@ -68,7 +79,9 @@ const Header = () => {
         </div>
 
         <footer className="mini-footer">
-          <span>© 2024 Futuristic Todo List.</span>
+          <a href="https://github.com/SalvatoreAcademyEmpresa/gerenciamento-de-tarefas">
+            <span>© 2024 Futuristic Todo List.</span>
+          </a>
         </footer>
       </aside>
     </div>

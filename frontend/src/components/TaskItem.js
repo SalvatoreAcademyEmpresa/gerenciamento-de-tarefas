@@ -9,9 +9,7 @@ import calendarIcon from "../assets/img/calendar.svg";
 import editIcon from "../assets/img/edit-icon.svg";
 import binIcon from "../assets/img/bin.svg";
 
-import moveIcon from "../assets/img/move-icon.png";
 import { buildApiDeleteRequest, API_URL } from "../api/api";
-
 
 const ItemType = "TODO";
 
@@ -139,16 +137,15 @@ const TaskItem = ({
             </div>
           )}
 
-
           {showCommentIcon && (
             <>
               <img
                 src={chatIcon}
                 alt="Comment Icon"
                 className={`comment-icon ${
-                  isCommentIconDisabled ? "disabled" : ""
+                  !isCommentIconEnabled ? "disabled" : ""
                 }`}
-                onClick={!isCommentIconDisabled ? toggleDetails : undefined}
+                onClick={isCommentIconEnabled ? toggleDetails : undefined}
               />
 
               <img
@@ -158,57 +155,21 @@ const TaskItem = ({
                 onClick={handleReminderClick}
               />
 
-              <img
+              {/* TODO:  <img
                 src={editIcon}
                 alt="Edit Icon"
                 className="edit-icon"
                 onClick={startEditing}
-              />
-
-              <img
+              /> */}
+              {/* <img
                 src={binIcon}
                 alt="Remove Icon"
                 className="remove-icon"
-                onClick={() => removeTodo(index)}
-              />
+                onClick={handleDelete}
+              /> */}
             </>
           )}
-
-          <div className="todo-actions">
-            {showCommentIcon && (
-              <>
-                <FontAwesomeIcon
-                  icon={faComment}
-                  className={`comment-icon ${
-                    isCommentIconEnabled ? "disabled" : ""
-                  }`}
-                  onClick={!isCommentIconEnabled ? toggleDetails : undefined}
-                />
-
-                <FontAwesomeIcon
-                  icon={faCalendar}
-                  className="reminder-icon"
-                  onClick={handleReminderClick}
-                />
-
-                <FontAwesomeIcon
-                  icon={faEdit}
-                  className="edit-icon"
-                  onClick={startEditing}
-                />
-
-                <FontAwesomeIcon
-                  icon={faTrashAlt}
-                  className="remove-icon"
-                  onClick={handleDelete}
-                />
-              </>
-            )}
-          </div>
-
         </div>
-
-        {isCurrentEditing && <div className="todo-actions"></div>}
       </li>
 
       {showDetails && <TaskDetails task={todo} onClose={toggleDetails} />}

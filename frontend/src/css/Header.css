@@ -18,7 +18,6 @@
 }
 
 .header-title {
-
   margin: 0.625rem;
 
   font-size: 0.975rem;
@@ -59,7 +58,6 @@
   transform: translateX(0);
 }
 
-
 .side-menu ul {
   list-style: none;
   padding: 0.625rem;
@@ -79,7 +77,8 @@
   display: flex;
   justify-content: center;
   margin-bottom: 1.25rem;
-  transform: translateY(7.5rem);
+  transform: translateY(1.5rem);
+}
 
 .user-profile {
   display: flex;
