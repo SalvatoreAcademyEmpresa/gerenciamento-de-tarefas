@@ -5,7 +5,6 @@ const { connectToDatabase } = require("./db/database-connection");
 const tasksRouter = require("./tasks/tasks.router");
 const commentsRouter = require('./comentários/comment.router')
 
-
 async function main() {
   await connectToDatabase();
   const app = express();
