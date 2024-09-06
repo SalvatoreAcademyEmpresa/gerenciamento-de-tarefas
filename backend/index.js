@@ -18,7 +18,7 @@ async function main() {
 
   app.use("/tasks", tasksRouter);
   app.use("/comments", commentsRouter);
-  app.use("/lembretes", lembreteRouter);
+  app.use("/lembretes", lembreteRouter);  
 
   app.listen(3000, function () {
     console.log("Servidor rodando em http://localhost:3000");
