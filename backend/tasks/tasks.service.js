@@ -1,5 +1,15 @@
 const Task = require("./tasks.model");
 
+async function updateTaskOrder(taskUpdates) {
+  const updates = taskUpdates.map(update => ({
+    updateOne: {
+      filter: { _id: update.id },
+      update: { order: update.order },
+    }
+  }));
+  return Task.bulkWrite(updates);
+}
+
 function readAll() {
   // Retorna todas as tarefas
   return Task.find();
@@ -46,4 +56,5 @@ module.exports = {
   create,
   updateById,
   deleteById,
+  updateTaskOrder,
 };
