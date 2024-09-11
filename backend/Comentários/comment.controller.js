@@ -33,14 +33,14 @@ async function getCommentsById(req, res) {
 
 async function updateComment(req, res) {
     try {
-        const updateComment = await commentService.updateComment(req.params.id, req.body);
-        if (updateComment) {
-            res.status(200).json(updateComment);
+        const updatedComment  = await commentService.updateComment(req.params.id, req.body);
+        if (updatedComment) {
+            res.status(200).json(updatedComment);
         } else {
             res.status(404).json({ message: 'Comment not found' });
         }
     } catch (error) {
-        res.status(500).json({ message: 'Failed to update commment', error });
+        res.status(500).json({ message: 'Failed to update comment', error });
     }
 }
 async function deleteComment(req, res) {
