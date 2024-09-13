@@ -1,3 +1,4 @@
+const { required } = require("joi");
 const mongoose = require("mongoose");
 
 const taskSchema = new mongoose.Schema({
@@ -16,6 +17,11 @@ const taskSchema = new mongoose.Schema({
   updatedAt: {
     type: Date,
     default: Date.now,
+  },
+  order: {
+    type: Number,
+    required: true,
+    default: 0,
   },
 });
 
