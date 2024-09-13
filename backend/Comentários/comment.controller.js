@@ -47,7 +47,7 @@ async function deleteComment(req, res) {
     try {
         const result = await commentService.deleteComment(req.params.id);
         if (result) {
-            res.status(200).json({ message: 'Comment deleted successfully'});            
+            res.status(204).send();            
         }else {
             res.status(404).json({ message: 'Comment not found'});
         }
