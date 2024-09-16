@@ -1,4 +1,4 @@
-const Lembrete = require('./lembrete.model');
+const lembreteService = require('./lembrete.service');
 
 const createLembrete = async (req, res) => {
     try {
