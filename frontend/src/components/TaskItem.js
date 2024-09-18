@@ -1,15 +1,12 @@
 import React, { useRef, useEffect, useState } from "react";
 import { useDrag, useDrop } from "react-dnd";
-import "../css/TaskItem.css";
-import TaskDetails from "../components/comment/CommentList";
+import { buildApiDeleteRequest, API_URL } from "../api/api";
 
+import TaskDetails from "../components/comment/CommentList";
+import Reminder from "../components/reminders/Reminder";
 import moveIcon from "../assets/img/move-icon.svg";
 import chatIcon from "../assets/img/chat.svg";
-import calendarIcon from "../assets/img/calendar.svg";
-import editIcon from "../assets/img/edit-icon.svg";
-import binIcon from "../assets/img/bin.svg";
-
-import { buildApiDeleteRequest, API_URL } from "../api/api";
+import "../css/TaskItem.css";
 
 const ItemType = "TODO";
 
@@ -75,11 +72,6 @@ const TaskItem = ({
 
   const toggleDetails = () => {
     setShowDetails(!showDetails);
-  };
-
-  const handleReminderClick = () => {
-    // TODO: Implementar integração com calendário
-    window.location.href = "https://calendar.google.com/calendar/u/0/r";
   };
 
   const handleClick = () => {
@@ -148,25 +140,10 @@ const TaskItem = ({
                 onClick={isCommentIconEnabled ? toggleDetails : undefined}
               />
 
-              <img
-                src={calendarIcon}
-                alt="Reminder Icon"
-                className="reminder-icon"
-                onClick={handleReminderClick}
-              />
+              <Reminder />
 
-              {/* TODO:  <img
-                src={editIcon}
-                alt="Edit Icon"
-                className="edit-icon"
-                onClick={startEditing}
-              /> */}
-              {/* <img
-                src={binIcon}
-                alt="Remove Icon"
-                className="remove-icon"
-                onClick={handleDelete}
-              /> */}
+              {/* TODO: <img src={editIcon} alt="Edit Icon" className="edit-icon" onClick={startEditing} /> */}
+              {/* <img src={binIcon} alt="Remove Icon" className="remove-icon" onClick={handleDelete} /> */}
             </>
           )}
         </div>
