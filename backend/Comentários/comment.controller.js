@@ -5,9 +5,10 @@ async function createComment(req, res) {
         const comment = await commentService.createComment(req.body);
         res.status(201).json(comment);
     } catch (error) {
-        res.status(500).json({ message: 'Failed to create comment', error });
+        res.status(500).json({ message: 'Failed to create comment!', error });
     }
 }
+
 
 async function getCommentsByPostId(req, res) {
     try {
