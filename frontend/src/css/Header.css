@@ -1,11 +1,19 @@
 :root {
   --base-font-size: 16px;
+  --header-bg: transparent;
+  --header-title-color: #000000;
+  --menu-bg: #1d2939;
+  --menu-item-bg: #2d2d2d;
+  --menu-item-hover-bg: #3e3e3e;
+  --text-color: #f1f1f1;
+  --footer-bg: #2c2c2c;
+  --footer-text-color: #aaa;
+  --highlight-color: #fdb022;
 }
 
 .header {
-  background-color: transparent;
-  padding: 0;
-  padding: 0.625rem;
+  background-color: var(--header-bg);
+  padding: 0.5rem 1rem;
   position: fixed;
   top: 0;
   left: 0;
@@ -14,44 +22,44 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  height: 3.75rem;
+  height: 4rem;
+  color: var(--header-title-color);
+  border-radius: 5px;
 }
 
 .header-title {
-  margin: 0.625rem;
-
-  font-size: 0.975rem;
-  color: #777;
-  text-align: right;
-  margin-right: 1.25rem;
+  color: var(--footer-text-color);
+  text-decoration: none;
+  font-size: 0.875rem;
+  margin: 0;
 }
 
 .menu-toggle {
   background-color: transparent;
   border: none;
   cursor: pointer;
-  margin-left: 1.25rem;
   padding: 0;
 }
 
 .menu-icon {
-  width: 1.5rem;
-  height: 1.5rem;
-  fill: #1d2939;
+  width: 2rem;
+  height: 2rem;
+  fill: var(--header-title-color);
 }
 
 .side-menu {
   position: fixed;
-  top: 5rem;
+  top: 4rem;
   left: 0;
-  width: 15.625rem;
-  height: 100%;
-  background-color: #fcfaf8;
-  box-shadow: 0.125rem 0 0.3125rem rgba(0, 0, 0, 0.1);
+  width: 18rem;
+  height: calc(75% - 4rem);
+  background-color: var(--menu-bg);
+  box-shadow: 0.125rem 0 0.3125rem rgba(0, 0, 0, 0.2);
   transform: translateX(-100%);
   transition: transform 0.3s ease;
-  background-color: #f2f4f7;
   border-radius: 0.25rem;
+  color: var(--text-color);
+  overflow-y: auto;
 }
 
 .side-menu.expanded {
@@ -60,85 +68,70 @@
 
 .side-menu ul {
   list-style: none;
-  padding: 0.625rem;
+  padding: 1rem;
+  margin: 0;
 }
 
 .side-menu li {
-  margin: 1.25rem 0;
-}
-
-.side-menu a {
-  color: #333;
-  text-decoration: none;
-  font-size: 0.8125rem;
-}
-
-.user-profile {
-  display: flex;
-  justify-content: center;
-  margin-bottom: 1.25rem;
-  transform: translateY(1.5rem);
-}
-
-.user-profile {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 1.25rem 0;
-  border-bottom: 0.0625rem solid #ddd;
+  margin: 1rem 0;
 }
 
 .menu-items {
-  list-style: none;
-  padding: 0.625rem;
-  margin: 0;
+  display: flex;
+  flex-direction: column;
 }
 
 .menu-items li {
   display: flex;
   align-items: center;
-  gap: 0.625rem;
-  background-color: transparent;
-  border: none;
-  color: #1d2939;
-  padding: 0.634rem;
+  gap: 1rem;
+  background-color: var(--menu-item-bg);
+  padding: 0.75rem;
+  border-radius: 0.25rem;
   cursor: pointer;
-  transition: color 0.3s ease;
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 .menu-items li:hover {
-  background-color: #f0f0f0;
+  background-color: var(--menu-item-hover-bg);
 }
 
 .add-task-button {
   display: flex;
   align-items: center;
-  gap: 0.625rem;
+  gap: 1rem;
   background-color: transparent;
   border: none;
-  color: #1d2939;
+  color: var(--highlight-color);
   font-weight: bold;
   cursor: pointer;
   transition: color 0.3s ease;
 }
 
 .add-task-button:hover {
-  color: #fdb022;
+  color: var(--text-color);
+}
+
+.user-profile {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 1rem 0;
+  border-bottom: 1px solid #444;
 }
 
 .projects-section {
-  padding: 1.25rem;
+  padding: 1rem;
 }
 
 .projects-section h3 {
-  margin-bottom: 0.625rem;
-  font-size: 1rem;
-  color: #333;
+  margin-bottom: 0.75rem;
+  font-size: 1.125rem;
+  color: var(--text-color);
 }
 
 .projects-list {
   list-style: none;
-  padding-left: 1.25rem;
   padding: 0;
   margin: 0;
 }
@@ -146,13 +139,13 @@
 .projects-list li {
   padding: 0.5rem 0;
   font-size: 0.875rem;
-  color: #555;
+  color: #bbb;
   cursor: pointer;
   transition: color 0.3s ease;
 }
 
 .projects-list li:hover {
-  color: #333;
+  color: var(--text-color);
 }
 
 .mini-footer {
@@ -160,19 +153,48 @@
   bottom: 0;
   width: 100%;
   text-align: center;
-  padding: 0.625rem 0;
-  background-color: #f1f1f1;
-  border-top: 0.0625rem solid #e1e1e1;
-  padding: 5.625rem 0;
-  background-color: #f9f9f9;
+  padding: 1rem 0;
+  background-color: var(--footer-bg);
+  border-top: 1px solid #444;
 }
 
-.mini-footer span {
+.mini-footer a {
+  color: var(--footer-text-color);
+  text-decoration: none;
   font-size: 0.875rem;
-  color: #777;
 }
 
-.mini-footer span:hover {
-  color: #555;
-  cursor: pointer;
+.mini-footer a:hover {
+  color: var(--text-color);
+}
+
+@media (max-width: 768px) {
+  .side-menu {
+    width: 80%;
+    max-width: 300px;
+  }
+
+  .header {
+    padding: 0.5rem;
+    height: auto;
+  }
+
+  .header-title {
+    font-size: 1rem;
+  }
+
+  .menu-icon {
+    width: 1.5rem;
+    height: 1.5rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .side-menu {
+    width: 90%;
+  }
+
+  .header-title {
+    font-size: 0.875rem;
+  }
 }
