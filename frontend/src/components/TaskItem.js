@@ -1,7 +1,5 @@
 import React, { useRef, useEffect, useState } from "react";
 import { useDrag, useDrop } from "react-dnd";
-import { buildApiDeleteRequest, API_URL } from "../api/api";
-
 import TaskDetails from "../components/comment/CommentList";
 import Reminder from "../components/reminders/Reminder";
 import moveIcon from "../assets/img/move-icon.svg";
@@ -79,13 +77,8 @@ const TaskItem = ({
     setTimeout(() => setIsClicked(false), 100);
   };
 
-  const handleDelete = async () => {
-    try {
-      await buildApiDeleteRequest(`${API_URL}/${todo._id}`);
-      removeTodo(index);
-    } catch (error) {
-      console.error(error);
-    }
+  const handleDelete = () => {
+    removeTodo(index);
   };
 
   return (

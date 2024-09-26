@@ -12,22 +12,16 @@ import clickSound from "../assets/audio/click-som.mp3";
 import addSound from "../assets/audio/add-som.mp3";
 
 import {
-  API_URL,
   buildApiGetRequest,
   buildApiPostRequest,
   buildApiPutRequest,
   buildApiDeleteRequest,
 } from "../api/api";
 
+const API_URL = "http://localhost:3000/tasks";
+
 const TodoList = () => {
-  const [todos, setTodos] = useState([
-    { text: "Set a reminder beforehand", completed: false },
-    { text: "Find a location", completed: false },
-    { text: "Screenshot the address", completed: false },
-    { text: "Book the tickets", completed: false },
-    { text: "Find out the parking", completed: false },
-    { text: "Call them", completed: false },
-  ]);
+  const [tasks, setTasks] = useState([]);
   const [editingIndex, setEditingIndex] = useState(null);
   const [isEditing, setIsEditing] = useState(false);
   const [title, setTitle] = useState("Booking Movie Tickets");
@@ -41,37 +35,37 @@ const TodoList = () => {
   const audioAddRef = useRef(new Audio(addSound));
 
   useEffect(() => {
-    const fetchToDos = async () => {
+    const fetchTasks = async () => {
       try {
         const data = await buildApiGetRequest(API_URL);
-        setTodos(data);
+        setTasks(data);
       } catch (error) {
         console.error(error);
       }
     };
-    fetchToDos();
+    fetchTasks();
   }, []);
 
-  const addTodo = async (newTodo) => {
-    const newTask = { text: newTodo, completed: false };
+  const addTask = async (newTask) => {
+    const newTaskObject = { text: newTask, completed: false };
     audioAddRef.current.play();
     toast.success("Task added successfully!");
 
     try {
-      await buildApiPostRequest(API_URL, newTask);
-      const updatedTodos = await buildApiGetRequest(API_URL);
-      setTodos(updatedTodos);
+      await buildApiPostRequest(API_URL, newTaskObject);
+      const updatedTasks = await buildApiGetRequest(API_URL);
+      setTasks(updatedTasks);
     } catch (error) {
       console.error(error);
       alert("Houve um erro ao adicionar a tarefa. Por favor, tente novamente.");
-      setTodos([...todos, newTask]);
+      setTasks([...tasks, newTaskObject]);
     }
   };
 
-  const removeTodo = async (index) => {
-    const todoId = todos[index]._id;
-    const updatedTodos = todos.filter((_, i) => i !== index);
-    setTodos(updatedTodos);
+  const removeTask = async (index) => {
+    const taskId = tasks[index]._id;
+    const updatedTasks = tasks.filter((_, i) => i !== index);
+    setTasks(updatedTasks);
     setEditingIndex(null);
     setIsEditing(false);
     audioDeleteRef.current.play();
@@ -79,32 +73,32 @@ const TodoList = () => {
     toast.error("Task deleted successfully!");
 
     try {
-      await buildApiDeleteRequest(`${API_URL}/${todoId}`);
+      await buildApiDeleteRequest(`${API_URL}/${taskId}`);
     } catch (error) {
       console.error(error);
     }
   };
 
-  const moveTodo = async (dragIndex, hoverIndex) => {
-    const draggedTodo = todos[dragIndex];
-    const updatedTodos = [...todos];
-    updatedTodos.splice(dragIndex, 1);
-    updatedTodos.splice(hoverIndex, 0, draggedTodo);
-    setTodos(updatedTodos);
+  const moveTask = async (dragIndex, hoverIndex) => {
+    const draggedTask = tasks[dragIndex];
+    const updatedTasks = [...tasks];
+    updatedTasks.splice(dragIndex, 1);
+    updatedTasks.splice(hoverIndex, 0, draggedTask);
+    setTasks(updatedTasks);
 
     try {
-      await buildApiPostRequest(`${API_URL}/reorder`, updatedTodos);
+      await buildApiPostRequest(`${API_URL}/reorder`, updatedTasks);
     } catch (error) {
       console.error(error);
     }
   };
 
   const saveEdit = async (index, newText) => {
-    const todoId = todos[index]._id;
-    const updatedTodo = { ...todos[index], text: newText };
-    const updatedTodos = [...todos];
-    updatedTodos[index] = updatedTodo;
-    setTodos(updatedTodos);
+    const taskId = tasks[index]._id;
+    const updatedTask = { ...tasks[index], text: newText };
+    const updatedTasks = [...tasks];
+    updatedTasks[index] = updatedTask;
+    setTasks(updatedTasks);
     setEditingIndex(null);
     setIsEditing(false);
     audioAddRef.current.play();
@@ -112,32 +106,32 @@ const TodoList = () => {
     toast.info("Task edited successfully!");
 
     try {
-      await buildApiPutRequest(`${API_URL}/${todoId}`, updatedTodo);
+      await buildApiPutRequest(`${API_URL}/${taskId}`, updatedTask);
     } catch (error) {
       console.error(error);
     }
   };
 
-  const toggleTodoCompletion = async (index) => {
-    const updatedTodos = [...todos];
-    updatedTodos[index].completed = !updatedTodos[index].completed;
-    setTodos(updatedTodos);
+  const toggleTaskCompletion = async (index) => {
+    const updatedTasks = [...tasks];
+    updatedTasks[index].completed = !updatedTasks[index].completed;
+    setTasks(updatedTasks);
     audioClickRef.current.play();
 
     try {
-      const todoId = todos[index]._id;
-      const updatedTodo = {
-        ...todos[index],
-        completed: !todos[index].completed,
+      const taskId = tasks[index]._id;
+      const updatedTask = {
+        ...tasks[index],
+        completed: !tasks[index].completed,
       };
-      await buildApiPutRequest(`${API_URL}/${todoId}`, updatedTodo);
+      await buildApiPutRequest(`${API_URL}/${taskId}`, updatedTask);
     } catch (error) {
       console.error(error);
     }
   };
 
   const startEditingFirstTask = () => {
-    if (todos.length > 0) {
+    if (tasks.length > 0) {
       setEditingIndex(0);
       setIsEditing(true);
     }
@@ -150,7 +144,7 @@ const TodoList = () => {
 
   const confirmRemove = () => {
     if (indexToRemove !== null) {
-      removeTodo(indexToRemove);
+      removeTask(indexToRemove);
       setShowModal(false);
     }
   };
@@ -163,7 +157,7 @@ const TodoList = () => {
   };
 
   const addReminder = (index) => {
-    alert(`Reminder added for task: ${todos[index].text}`);
+    alert(`Reminder added for task: ${tasks[index].text}`);
   };
 
   const handleTitleEdit = () => {
@@ -175,7 +169,6 @@ const TodoList = () => {
     <DndProvider backend={HTML5Backend}>
       <div className="todo-container">
         <ToastContainer />
-
         <header className="todo-header">
           {isEditing && <div className="editing-indicator">Editing...</div>}
           {isEditingTitle ? (
@@ -224,37 +217,34 @@ const TodoList = () => {
             </div>
           )}
         </header>
-
         <ul className="todo-list">
-          {todos.map((todo, index) => (
+          {tasks.map((task, index) => (
             <TaskItem
               key={index}
               index={index}
-              todo={todo}
+              todo={task}
               editingIndex={editingIndex}
               setEditingIndex={setEditingIndex}
               setIsEditing={setIsEditing}
-              moveTodo={moveTodo}
-              toggleTodoCompletion={toggleTodoCompletion}
+              moveTodo={moveTask}
+              toggleTodoCompletion={toggleTaskCompletion}
               saveEdit={saveEdit}
-              removeTodo={removeTodo}
+              removeTodo={removeTask}
               addReminder={addReminder}
             />
           ))}
         </ul>
-
-        <TaskForm onAdd={addTodo} />
+        <TaskForm onAdd={addTask} />
         {isEditing && (
           <button
             className="save-button"
             onClick={() =>
-              saveEdit(editingIndex, todos[editingIndex]?.text || "")
+              saveEdit(editingIndex, tasks[editingIndex]?.text || "")
             }
           >
             Save
           </button>
         )}
-
         {showModal && (
           <div className="modal-overlay" onClick={cancelRemove}>
             <div className="modal-content">
