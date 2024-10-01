@@ -1,7 +1,7 @@
 import React, { useRef, useEffect, useState } from "react";
 import { useDrag, useDrop } from "react-dnd";
-import TaskDetails from "../components/comment/CommentList";
-import Reminder from "../components/reminders/Reminder";
+import TaskDetails from "../components/description/TaskDescriptionList";
+import Reminder from "./reminder/Reminder";
 import moveIcon from "../assets/img/move-icon.svg";
 import chatIcon from "../assets/img/chat.svg";
 import "../css/TaskItem.css";

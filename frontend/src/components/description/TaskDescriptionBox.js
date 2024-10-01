@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect, useCallback } from "react";
-import "../comment/css/CommentBox.css";
+import "./css/TaskDescriptionBox.css";
 
 const CommentBox = ({ onAddComment, index, onClose, existingComment }) => {
   const [newComment, setNewComment] = useState(existingComment);
@@ -46,7 +46,7 @@ const CommentBox = ({ onAddComment, index, onClose, existingComment }) => {
             placeholder="Write a description here..."
           />
           <button onClick={handleAddComment}>
-            {index !== null ? "Edit" : "Description"}
+            {index !== null ? "Save" : "Save"}
           </button>
         </div>
       </div>

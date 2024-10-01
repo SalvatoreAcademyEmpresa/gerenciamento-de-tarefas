@@ -18,10 +18,17 @@ import {
   buildApiDeleteRequest,
 } from "../api/api";
 
-const API_URL = "http://localhost:3000/tasks";
-
 const TodoList = () => {
-  const [tasks, setTasks] = useState([]);
+  const initialTasks = [
+    { text: "Set a reminder beforehand", completed: false },
+    { text: "Find a location", completed: false },
+    { text: "Screenshot the address", completed: false },
+    { text: "Book the tickets", completed: false },
+    { text: "Find out the parking", completed: false },
+    { text: "Call them", completed: false },
+  ];
+
+  const [tasks, setTasks] = useState(initialTasks);
   const [editingIndex, setEditingIndex] = useState(null);
   const [isEditing, setIsEditing] = useState(false);
   const [title, setTitle] = useState("Booking Movie Tickets");
@@ -37,7 +44,7 @@ const TodoList = () => {
   useEffect(() => {
     const fetchTasks = async () => {
       try {
-        const data = await buildApiGetRequest(API_URL);
+        const data = await buildApiGetRequest();
         setTasks(data);
       } catch (error) {
         console.error(error);
@@ -52,8 +59,8 @@ const TodoList = () => {
     toast.success("Task added successfully!");
 
     try {
-      await buildApiPostRequest(API_URL, newTaskObject);
-      const updatedTasks = await buildApiGetRequest(API_URL);
+      await buildApiPostRequest(newTaskObject);
+      const updatedTasks = await buildApiGetRequest();
       setTasks(updatedTasks);
     } catch (error) {
       console.error(error);
@@ -73,7 +80,7 @@ const TodoList = () => {
     toast.error("Task deleted successfully!");
 
     try {
-      await buildApiDeleteRequest(`${API_URL}/${taskId}`);
+      await buildApiDeleteRequest(taskId);
     } catch (error) {
       console.error(error);
     }
@@ -87,7 +94,7 @@ const TodoList = () => {
     setTasks(updatedTasks);
 
     try {
-      await buildApiPostRequest(`${API_URL}/reorder`, updatedTasks);
+      await buildApiPostRequest(`/reorder`, updatedTasks);
     } catch (error) {
       console.error(error);
     }
@@ -106,7 +113,7 @@ const TodoList = () => {
     toast.info("Task edited successfully!");
 
     try {
-      await buildApiPutRequest(`${API_URL}/${taskId}`, updatedTask);
+      await buildApiPutRequest(taskId, updatedTask);
     } catch (error) {
       console.error(error);
     }
@@ -124,7 +131,7 @@ const TodoList = () => {
         ...tasks[index],
         completed: !tasks[index].completed,
       };
-      await buildApiPutRequest(`${API_URL}/${taskId}`, updatedTask);
+      await buildApiPutRequest(taskId, updatedTask);
     } catch (error) {
       console.error(error);
     }

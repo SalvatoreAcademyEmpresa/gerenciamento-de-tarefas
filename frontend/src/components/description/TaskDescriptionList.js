@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTimes } from "@fortawesome/free-solid-svg-icons";
-import "../comment/css/CommentList.css";
-import CommentBox from "./CommentBox";
+import "./css/TaskDescriptionList.css";
+import CommentBox from "./TaskDescriptionBox";
 
 const CommentList = ({ task, onClose }) => {
   const [comments, setComments] = useState(task.comments || []);
