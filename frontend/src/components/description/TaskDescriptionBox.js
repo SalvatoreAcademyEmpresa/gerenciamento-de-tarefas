@@ -1,8 +1,8 @@
 import React, { useState, useRef, useEffect, useCallback } from "react";
-import "../comment/css/CommentBox.css";
+import "./css/TaskDescriptionBox.css";
 
-const CommentBox = ({ onAddComment, index, onClose }) => {
-  const [newComment, setNewComment] = useState("");
+const CommentBox = ({ onAddComment, index, onClose, existingComment }) => {
+  const [newComment, setNewComment] = useState(existingComment);
   const commentBoxRef = useRef(null);
 
   const handleAddComment = () => {
@@ -32,6 +32,10 @@ const CommentBox = ({ onAddComment, index, onClose }) => {
     };
   }, [handleClickOutside]);
 
+  useEffect(() => {
+    setNewComment(existingComment);
+  }, [existingComment]);
+
   return (
     <div className="comment-box-overlay">
       <div className="comment-box" ref={commentBoxRef}>
@@ -39,10 +43,11 @@ const CommentBox = ({ onAddComment, index, onClose }) => {
           <textarea
             value={newComment}
             onChange={(e) => setNewComment(e.target.value)}
-            placeholder="Write a comment here..."
+            placeholder="Write a description here..."
           />
-
-          <button onClick={handleAddComment}>Comment</button>
+          <button onClick={handleAddComment}>
+            {index !== null ? "Save" : "Save"}
+          </button>
         </div>
       </div>
     </div>

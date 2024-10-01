@@ -62,11 +62,6 @@ const Header = () => {
             <span>Bin</span>
           </li>
 
-          <li>
-            <FontAwesomeIcon icon={faClock} />
-            <span>Upcoming</span>
-          </li>
-
           {/* TODO: <li>
             <FontAwesomeIcon icon={faTags} />
             <span>Filters & Labels</span>
