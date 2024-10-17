@@ -1,5 +1,15 @@
 {
-  "dependencies": {
-    "joi": "^17.13.3"
-  }
+  "name": "gerenciamento-de-tarefas",
+  "version": "1.0.0",
+  "description": "<figure><img src=\"./docs/todo-list.avif\" alt=\"\"><figcaption></figcaption></figure>",
+  "main": "index.js",
+  "directories": {
+    "doc": "docs"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
 }
