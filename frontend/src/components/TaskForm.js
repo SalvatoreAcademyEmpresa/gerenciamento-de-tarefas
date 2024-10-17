@@ -7,7 +7,11 @@ const TaskForm = ({ onAdd }) => {
 
   const addTodo = () => {
     if (newTodo.trim()) {
-      onAdd(newTodo);
+      const taskObject = {
+        text: newTodo,
+        completed: false,
+      };
+      onAdd(taskObject);
       setNewTodo("");
     }
   };

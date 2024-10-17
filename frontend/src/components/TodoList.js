@@ -98,13 +98,12 @@ const TodoList = () => {
   }, []);
 
   const addTask = async (newTask) => {
-    const newTaskObject = { text: newTask, completed: false };
     audioAddRef.current.play();
     toast.success("Task added successfully!");
 
     setIsSaving(true);
     try {
-      await buildApiPostRequest(API_URL, newTaskObject);
+      await buildApiPostRequest(API_URL, newTask);
       const updatedTasks = await buildApiGetRequest(API_URL);
       setTasks(updatedTasks);
     } catch (error) {
@@ -304,23 +303,16 @@ const TodoList = () => {
           </ul>
         )}
 
-        <TaskForm addTask={addTask} isSaving={isSaving} />
+        <TaskForm onAdd={addTask} isSaving={isSaving} />
 
         {showModal && (
           <div className="modal-overlay" onClick={cancelRemove}>
             <div className="modal">
-              <h2>Are you sure?</h2>
-              <p>Do you really want to delete this task?</p>
+              <h2>Confirm Removal</h2>
+              <p>Are you sure you want to remove this task?</p>
               <div className="modal-actions">
-                <button
-                  className="cancel-button"
-                  onClick={() => setShowModal(false)}
-                >
-                  Cancel
-                </button>
-                <button className="confirm-button" onClick={confirmRemove}>
-                  Confirm
-                </button>
+                <button onClick={confirmRemove}>Confirm</button>
+                <button onClick={() => setShowModal(false)}>Cancel</button>
               </div>
             </div>
           </div>
