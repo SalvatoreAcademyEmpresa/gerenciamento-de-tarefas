@@ -15,14 +15,11 @@ const TaskItem = ({
   setEditingIndex,
   setIsEditing,
   removeTodo,
-  moveTodo,
   toggleTodoCompletion,
-  saveEdit,
 }) => {
   const [editingText, setEditingText] = useState(todo.text);
   const [showDetails, setShowDetails] = useState(false);
   const [showCommentIcon, setShowCommentIcon] = useState(false);
-  const [isCommentIconEnabled] = useState(true);
   const [isClicked, setIsClicked] = useState(false);
 
   const isCurrentEditing = editingIndex === index;
@@ -40,7 +37,6 @@ const TaskItem = ({
     accept: ItemType,
     hover: (item) => {
       if (item.index !== index) {
-        moveTodo(item.index, index);
         item.index = index;
       }
     },
@@ -62,19 +58,9 @@ const TaskItem = ({
 
   const handleSaveEdit = () => {
     if (editingText.trim()) {
-      saveEdit(index, editingText);
       setEditingIndex(null);
       setIsEditing(false);
     }
-  };
-
-  const toggleDetails = () => {
-    setShowDetails(!showDetails);
-  };
-
-  const handleClick = () => {
-    setIsClicked(true);
-    setTimeout(() => setIsClicked(false), 100);
   };
 
   const handleDelete = () => {
@@ -89,7 +75,7 @@ const TaskItem = ({
         style={{ opacity: isDragging ? 0.5 : 1 }}
         onMouseEnter={() => setShowCommentIcon(true)}
         onMouseLeave={() => setShowCommentIcon(false)}
-        onClick={handleClick}
+        onClick={() => setIsClicked(!isClicked)}
       >
         <div className="todo-content">
           <img src={moveIcon} alt="Move Icon" className="move-icon" />
@@ -106,10 +92,7 @@ const TaskItem = ({
             <input
               type="text"
               value={editingText}
-              onChange={(e) => {
-                setEditingText(e.target.value);
-                todo.text = e.target.value;
-              }}
+              onChange={(e) => setEditingText(e.target.value)}
               className="edit-input"
               ref={inputRef}
             />
@@ -119,7 +102,7 @@ const TaskItem = ({
               onClick={startEditing}
             >
               <h2 className="task-title">{todo.title}</h2>
-              <p className="task-text">{todo.text}</p>{" "}
+              <p className="task-text">{todo.text}</p>
             </div>
           )}
 
@@ -128,10 +111,8 @@ const TaskItem = ({
               <img
                 src={chatIcon}
                 alt="Comment Icon"
-                className={`comment-icon ${
-                  !isCommentIconEnabled ? "disabled" : ""
-                }`}
-                onClick={isCommentIconEnabled ? toggleDetails : undefined}
+                className="comment-icon"
+                onClick={() => setShowDetails(!showDetails)}
               />
               <Reminder />
             </>
@@ -139,7 +120,9 @@ const TaskItem = ({
         </div>
       </li>
 
-      {showDetails && <TaskDetails task={todo} onClose={toggleDetails} />}
+      {showDetails && (
+        <TaskDetails task={todo} onClose={() => setShowDetails(false)} />
+      )}
     </>
   );
 };
