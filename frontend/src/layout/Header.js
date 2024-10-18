@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import "../css/Header.css";
 import menuIcon from "../assets/img/menu.svg";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -7,16 +8,36 @@ import {
   faSearch,
   faInbox,
   faCalendarDay,
-  faClock,
-  faTags,
   faTrashCan,
+  faSync,
+  faEraser,
 } from "@fortawesome/free-solid-svg-icons";
 
 const Header = () => {
   const [isExpanded, setIsExpanded] = useState(false);
+  const [isOfflineMode, setIsOfflineMode] = useState(true);
+  const navigate = useNavigate();
 
   const toggleMenu = () => {
     setIsExpanded(!isExpanded);
+  };
+
+  const toggleOfflineMode = () => {
+    setIsOfflineMode(!isOfflineMode);
+    if (isOfflineMode) {
+      alert("You are now in online mode.");
+      navigate("/online");
+    } else {
+      alert("You are now in offline mode.");
+      navigate("/");
+    }
+  };
+
+  const resetApp = () => {
+    localStorage.removeItem("tasks");
+    localStorage.removeItem("title");
+    localStorage.clear();
+    window.location.reload();
   };
 
   return (
@@ -25,8 +46,11 @@ const Header = () => {
         <button className="menu-toggle" onClick={toggleMenu}>
           <img src={menuIcon} alt="Menu Icon" className="menu-icon" />
         </button>
-
-        <div className="header-title"> Futuristic Todo List | v1.0.0</div>
+        <div className="header-title">
+          {isOfflineMode
+            ? "Futuristic Todo List | v1.0.0"
+            : "Futuristic Todo List | v1.0.0 | Version in Development Phase"}
+        </div>
       </nav>
 
       <aside className={`side-menu ${isExpanded ? "expanded" : ""}`}>
@@ -37,6 +61,24 @@ const Header = () => {
 
         <ul className="menu-items">
           <li>
+            <button
+              className={`offline-mode-button ${
+                isOfflineMode ? "offline" : ""
+              }`}
+              onClick={toggleOfflineMode}
+            >
+              <FontAwesomeIcon icon={faSync} />
+              {isOfflineMode ? "Enable Online Mode" : "Enable Offline Mode"}
+            </button>
+          </li>
+
+          <li>
+            <button className="reset-button" onClick={resetApp}>
+              <FontAwesomeIcon icon={faEraser} /> Reset Tasks and Title
+            </button>
+          </li>
+
+          <li>
             <button className="add-task-button">
               <FontAwesomeIcon icon={faInbox} /> Add task
             </button>
@@ -46,12 +88,6 @@ const Header = () => {
             <FontAwesomeIcon icon={faSearch} />
             <span>Search</span>
           </li>
-
-          <li>
-            <FontAwesomeIcon icon={faInbox} />
-            <span>Inbox</span>
-          </li>
-
           <li>
             <FontAwesomeIcon icon={faCalendarDay} />
             <span>Reminder</span>
@@ -61,17 +97,7 @@ const Header = () => {
             <FontAwesomeIcon icon={faTrashCan} />
             <span>Bin</span>
           </li>
-
-          {/* TODO: <li>
-            <FontAwesomeIcon icon={faTags} />
-            <span>Filters & Labels</span>
-          </li> */}
         </ul>
-
-        {/* TODO: <div className="projects-section">
-          <h3>My Projects</h3>
-          <ul className="projects-list"></ul>
-        </div> */}
 
         <footer className="mini-footer">
           <a href="https://github.com/SalvatoreAcademyEmpresa/gerenciamento-de-tarefas">

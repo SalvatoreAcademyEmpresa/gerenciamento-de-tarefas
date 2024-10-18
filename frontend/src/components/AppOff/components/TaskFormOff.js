@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import "../css/TaskForm.css";
+import "../css/TaskFormOff.css";
 import addIcon from "../assets/img/add-icon.svg";
 
 const TaskForm = ({ onAdd }) => {
@@ -7,11 +7,7 @@ const TaskForm = ({ onAdd }) => {
 
   const addTodo = () => {
     if (newTodo.trim()) {
-      const taskObject = {
-        text: newTodo,
-        completed: false,
-      };
-      onAdd(taskObject);
+      onAdd(newTodo);
       setNewTodo("");
     }
   };
