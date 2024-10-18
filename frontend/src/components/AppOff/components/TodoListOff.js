@@ -2,23 +2,19 @@ import React, { useState, useEffect, useRef } from "react";
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
 import { ToastContainer, toast } from "react-toastify";
+
+import TaskFormOff from "../../AppOff/components/TaskFormOff";
+import TaskItemOff from "../../AppOff/components/TaskItemOff";
+
 import "react-toastify/dist/ReactToastify.css";
-import "../css/TodoList.css";
-import TaskForm from "./TaskForm";
-import TaskItem from "./TaskItem";
-import "../css/Modal.css";
+import "../css/TodoListOff.css";
+import "../css/ModalOff.css";
+
 import deleteSound from "../assets/audio/delete_sound.mp3";
 import clickSound from "../assets/audio/click-som.mp3";
 import addSound from "../assets/audio/add-som.mp3";
 
-import {
-  buildApiGetRequest,
-  buildApiPostRequest,
-  buildApiPutRequest,
-  buildApiDeleteRequest,
-} from "../api/api";
-
-const TodoList = () => {
+const TodoListOff = () => {
   const initialTasks = [
     { text: "Set a reminder beforehand", completed: false },
     { text: "Find a location", completed: false },
@@ -28,10 +24,17 @@ const TodoList = () => {
     { text: "Call them", completed: false },
   ];
 
-  const [tasks, setTasks] = useState(initialTasks);
+  const [title, setTitle] = useState(() => {
+    const savedTitle = localStorage.getItem("title");
+    return savedTitle ? savedTitle : "Booking Movie Tickets";
+  });
+
+  const [tasks, setTasks] = useState(() => {
+    const savedTasks = localStorage.getItem("tasks");
+    return savedTasks ? JSON.parse(savedTasks) : initialTasks;
+  });
   const [editingIndex, setEditingIndex] = useState(null);
   const [isEditing, setIsEditing] = useState(false);
-  const [title, setTitle] = useState("Booking Movie Tickets");
   const [isEditingTitle, setIsEditingTitle] = useState(false);
   const [editingTitle, setEditingTitle] = useState(title);
   const [showModal, setShowModal] = useState(false);
@@ -42,66 +45,40 @@ const TodoList = () => {
   const audioAddRef = useRef(new Audio(addSound));
 
   useEffect(() => {
-    const fetchTasks = async () => {
-      try {
-        const data = await buildApiGetRequest();
-        setTasks(data);
-      } catch (error) {
-        console.error(error);
-      }
-    };
-    fetchTasks();
-  }, []);
+    if (tasks !== initialTasks) {
+      localStorage.setItem("tasks", JSON.stringify(tasks));
+    }
+  }, [tasks]);
 
-  const addTask = async (newTask) => {
+  useEffect(() => {
+    localStorage.setItem("title", title);
+  }, [title]);
+
+  const addTask = (newTask) => {
     const newTaskObject = { text: newTask, completed: false };
     audioAddRef.current.play();
     toast.success("Task added successfully!");
-
-    try {
-      await buildApiPostRequest(newTaskObject);
-      const updatedTasks = await buildApiGetRequest();
-      setTasks(updatedTasks);
-    } catch (error) {
-      console.error(error);
-      alert("Houve um erro ao adicionar a tarefa. Por favor, tente novamente.");
-      setTasks([...tasks, newTaskObject]);
-    }
+    setTasks([...tasks, newTaskObject]);
   };
 
-  const removeTask = async (index) => {
-    const taskId = tasks[index]._id;
+  const removeTask = (index) => {
     const updatedTasks = tasks.filter((_, i) => i !== index);
     setTasks(updatedTasks);
     setEditingIndex(null);
     setIsEditing(false);
     audioDeleteRef.current.play();
-
     toast.error("Task deleted successfully!");
-
-    try {
-      await buildApiDeleteRequest(taskId);
-    } catch (error) {
-      console.error(error);
-    }
   };
 
-  const moveTask = async (dragIndex, hoverIndex) => {
+  const moveTask = (dragIndex, hoverIndex) => {
     const draggedTask = tasks[dragIndex];
     const updatedTasks = [...tasks];
     updatedTasks.splice(dragIndex, 1);
     updatedTasks.splice(hoverIndex, 0, draggedTask);
     setTasks(updatedTasks);
-
-    try {
-      await buildApiPostRequest(`/reorder`, updatedTasks);
-    } catch (error) {
-      console.error(error);
-    }
   };
 
-  const saveEdit = async (index, newText) => {
-    const taskId = tasks[index]._id;
+  const saveEdit = (index, newText) => {
     const updatedTask = { ...tasks[index], text: newText };
     const updatedTasks = [...tasks];
     updatedTasks[index] = updatedTask;
@@ -109,32 +86,14 @@ const TodoList = () => {
     setEditingIndex(null);
     setIsEditing(false);
     audioAddRef.current.play();
-
     toast.info("Task edited successfully!");
-
-    try {
-      await buildApiPutRequest(taskId, updatedTask);
-    } catch (error) {
-      console.error(error);
-    }
   };
 
-  const toggleTaskCompletion = async (index) => {
+  const toggleTaskCompletion = (index) => {
     const updatedTasks = [...tasks];
     updatedTasks[index].completed = !updatedTasks[index].completed;
     setTasks(updatedTasks);
     audioClickRef.current.play();
-
-    try {
-      const taskId = tasks[index]._id;
-      const updatedTask = {
-        ...tasks[index],
-        completed: !tasks[index].completed,
-      };
-      await buildApiPutRequest(taskId, updatedTask);
-    } catch (error) {
-      console.error(error);
-    }
   };
 
   const startEditingFirstTask = () => {
@@ -166,7 +125,6 @@ const TodoList = () => {
   const addReminder = (index) => {
     alert(`Reminder added for task: ${tasks[index].text}`);
   };
-
   const handleTitleEdit = () => {
     setTitle(editingTitle);
     setIsEditingTitle(false);
@@ -226,7 +184,7 @@ const TodoList = () => {
         </header>
         <ul className="todo-list">
           {tasks.map((task, index) => (
-            <TaskItem
+            <TaskItemOff
               key={index}
               index={index}
               todo={task}
@@ -241,7 +199,7 @@ const TodoList = () => {
             />
           ))}
         </ul>
-        <TaskForm onAdd={addTask} />
+        <TaskFormOff onAdd={addTask} />
         {isEditing && (
           <button
             className="save-button"
@@ -271,4 +229,4 @@ const TodoList = () => {
   );
 };
 
-export default TodoList;
+export default TodoListOff;
