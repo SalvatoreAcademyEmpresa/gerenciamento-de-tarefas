@@ -3,6 +3,7 @@ import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { Circles } from "react-loader-spinner";
 import "../css/TodoList.css";
 import TaskForm from "./TaskForm";
 import TaskItem from "./TaskItem";
@@ -11,24 +12,63 @@ import deleteSound from "../assets/audio/delete_sound.mp3";
 import clickSound from "../assets/audio/click-som.mp3";
 import addSound from "../assets/audio/add-som.mp3";
 
-import {
-  buildApiGetRequest,
-  buildApiPostRequest,
-  buildApiPutRequest,
-  buildApiDeleteRequest,
-} from "../api/api";
+const API_URL = "http://localhost:3000/tasks";
+
+const buildApiGetRequest = async (url) => {
+  const response = await fetch(url, { method: "GET" });
+
+  if (!response.ok) {
+    throw new Error("Erro ao carregar dados: " + url);
+  }
+
+  return await response.json();
+};
+
+const buildApiPostRequest = async (url, body) => {
+  const response = await fetch(url, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(body),
+  });
+
+  if (!response.ok) {
+    throw new Error("Erro ao enviar dados: " + url);
+  }
+
+  return await response.json();
+};
+
+const buildApiPutRequest = async (url, body) => {
+  const response = await fetch(url, {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(body),
+  });
+
+  if (!response.ok) {
+    throw new Error("Erro ao atualizar dados: " + url);
+  }
+
+  return await response.json();
+};
+
+const buildApiDeleteRequest = async (url) => {
+  const response = await fetch(url, { method: "DELETE" });
+
+  if (!response.ok) {
+    throw new Error("Erro ao remover dados: " + url);
+  }
+
+  return await response.json();
+};
 
 const TodoList = () => {
-  const initialTasks = [
-    { text: "Set a reminder beforehand", completed: false },
-    { text: "Find a location", completed: false },
-    { text: "Screenshot the address", completed: false },
-    { text: "Book the tickets", completed: false },
-    { text: "Find out the parking", completed: false },
-    { text: "Call them", completed: false },
-  ];
-
-  const [tasks, setTasks] = useState(initialTasks);
+  const [tasks, setTasks] = useState([]);
+  const [loading, setLoading] = useState(true);
   const [editingIndex, setEditingIndex] = useState(null);
   const [isEditing, setIsEditing] = useState(false);
   const [title, setTitle] = useState("Booking Movie Tickets");
@@ -36,6 +76,7 @@ const TodoList = () => {
   const [editingTitle, setEditingTitle] = useState(title);
   const [showModal, setShowModal] = useState(false);
   const [indexToRemove, setIndexToRemove] = useState(null);
+  const [isSaving, setIsSaving] = useState(false);
 
   const audioDeleteRef = useRef(new Audio(deleteSound));
   const audioClickRef = useRef(new Audio(clickSound));
@@ -44,10 +85,13 @@ const TodoList = () => {
   useEffect(() => {
     const fetchTasks = async () => {
       try {
-        const data = await buildApiGetRequest();
+        const data = await buildApiGetRequest(API_URL);
         setTasks(data);
       } catch (error) {
+        toast.error("Erro ao carregar as tarefas.");
         console.error(error);
+      } finally {
+        setLoading(false);
       }
     };
     fetchTasks();
@@ -58,14 +102,15 @@ const TodoList = () => {
     audioAddRef.current.play();
     toast.success("Task added successfully!");
 
+    setIsSaving(true);
     try {
-      await buildApiPostRequest(newTaskObject);
-      const updatedTasks = await buildApiGetRequest();
-      setTasks(updatedTasks);
+      const addedTask = await buildApiPostRequest(API_URL, newTaskObject);
+      setTasks((prevTasks) => [...prevTasks, addedTask]);
     } catch (error) {
       console.error(error);
-      alert("Houve um erro ao adicionar a tarefa. Por favor, tente novamente.");
-      setTasks([...tasks, newTaskObject]);
+      toast.error("Houve um erro ao adicionar a tarefa.");
+    } finally {
+      setIsSaving(false);
     }
   };
 
@@ -80,7 +125,7 @@ const TodoList = () => {
     toast.error("Task deleted successfully!");
 
     try {
-      await buildApiDeleteRequest(taskId);
+      await buildApiDeleteRequest(`${API_URL}/${taskId}`);
     } catch (error) {
       console.error(error);
     }
@@ -94,7 +139,7 @@ const TodoList = () => {
     setTasks(updatedTasks);
 
     try {
-      await buildApiPostRequest(`/reorder`, updatedTasks);
+      await buildApiPostRequest(`${API_URL}/reorder`, updatedTasks);
     } catch (error) {
       console.error(error);
     }
@@ -113,7 +158,7 @@ const TodoList = () => {
     toast.info("Task edited successfully!");
 
     try {
-      await buildApiPutRequest(taskId, updatedTask);
+      await buildApiPutRequest(`${API_URL}/${taskId}`, updatedTask);
     } catch (error) {
       console.error(error);
     }
@@ -131,7 +176,7 @@ const TodoList = () => {
         ...tasks[index],
         completed: !tasks[index].completed,
       };
-      await buildApiPutRequest(taskId, updatedTask);
+      await buildApiPutRequest(`${API_URL}/${taskId}`, updatedTask);
     } catch (error) {
       console.error(error);
     }
@@ -224,43 +269,56 @@ const TodoList = () => {
             </div>
           )}
         </header>
-        <ul className="todo-list">
-          {tasks.map((task, index) => (
-            <TaskItem
-              key={index}
-              index={index}
-              todo={task}
-              editingIndex={editingIndex}
-              setEditingIndex={setEditingIndex}
-              setIsEditing={setIsEditing}
-              moveTodo={moveTask}
-              toggleTodoCompletion={toggleTaskCompletion}
-              saveEdit={saveEdit}
-              removeTodo={removeTask}
-              addReminder={addReminder}
+
+        {loading ? (
+          <div className="spinner-container">
+            <Circles
+              height="80"
+              width="80"
+              color="#4fa94d"
+              ariaLabel="circles-loading"
+              wrapperStyle={{}}
+              wrapperClass=""
+              visible={true}
             />
-          ))}
-        </ul>
-        <TaskForm onAdd={addTask} />
-        {isEditing && (
-          <button
-            className="save-button"
-            onClick={() =>
-              saveEdit(editingIndex, tasks[editingIndex]?.text || "")
-            }
-          >
-            Save
-          </button>
+          </div>
+        ) : (
+          <ul className="todo-list">
+            {tasks.map((task, index) => (
+              <TaskItem
+                key={index}
+                index={index}
+                todo={task}
+                editingIndex={editingIndex}
+                isEditing={isEditing}
+                removeTask={removeTask}
+                toggleTaskCompletion={toggleTaskCompletion}
+                saveEdit={saveEdit}
+                moveTask={moveTask}
+                addReminder={addReminder}
+                openModal={openModal}
+                cancelRemove={cancelRemove}
+              />
+            ))}
+          </ul>
         )}
+
+        <TaskForm addTask={addTask} isSaving={isSaving} />
+
         {showModal && (
           <div className="modal-overlay" onClick={cancelRemove}>
-            <div className="modal-content">
-              <div className="modal-title">
-                Are you sure you want to remove this?
-              </div>
+            <div className="modal">
+              <h2>Are you sure?</h2>
+              <p>Do you really want to delete this task?</p>
               <div className="modal-actions">
-                <button className="close-button" onClick={confirmRemove}>
-                  Remove
+                <button
+                  className="cancel-button"
+                  onClick={() => setShowModal(false)}
+                >
+                  Cancel
+                </button>
+                <button className="confirm-button" onClick={confirmRemove}>
+                  Confirm
                 </button>
               </div>
             </div>

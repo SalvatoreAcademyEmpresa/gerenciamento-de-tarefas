@@ -118,7 +118,8 @@ const TaskItem = ({
               className={`todo-text ${todo.completed ? "completed" : ""}`}
               onClick={startEditing}
             >
-              {todo.text}
+              <h2 className="task-title">{todo.title}</h2>
+              <p className="task-text">{todo.text}</p>{" "}
             </div>
           )}
 
@@ -132,11 +133,7 @@ const TaskItem = ({
                 }`}
                 onClick={isCommentIconEnabled ? toggleDetails : undefined}
               />
-
               <Reminder />
-
-              {/* TODO: <img src={editIcon} alt="Edit Icon" className="edit-icon" onClick={startEditing} /> */}
-              {/* <img src={binIcon} alt="Remove Icon" className="remove-icon" onClick={handleDelete} /> */}
             </>
           )}
         </div>
