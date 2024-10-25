@@ -1,44 +1,43 @@
-export const buildApiGetRequest = async (url) => {
-  const response = await fetch(url);
-  if (!response.ok) {
-    throw new Error("Network response was not ok");
-  }
-  return await response.json();
-};
+const API_URL = "http://localhost:3000/tasks";
 
-export const buildApiPostRequest = async (url, data) => {
-  const response = await fetch(url, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(data),
-  });
-  if (!response.ok) {
-    throw new Error("Network response was not ok");
-  }
-  return await response.json();
-};
-
-export const buildApiPutRequest = async (url, data) => {
+const buildApiPutRequest = async (url, body) => {
   const response = await fetch(url, {
     method: "PUT",
     headers: {
       "Content-Type": "application/json",
     },
-    body: JSON.stringify(data),
+    body: JSON.stringify(body),
   });
+
   if (!response.ok) {
-    throw new Error("Network response was not ok");
+    throw new Error(`Error: ${response.statusText}`);
+  }
+
+  return await response.json();
+};
+
+const buildApiPostRequest = async (url, body) => {
+  const response = await fetch(url, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(body),
+  });
+
+  if (!response.ok) {
+    throw new Error(`Error: ${response.statusText}`);
+  }
+
+  return await response.json();
+};
+
+const fetchTasks = async () => {
+  const response = await fetch(API_URL);
+  if (!response.ok) {
+    throw new Error(`Error: ${response.statusText}`);
   }
   return await response.json();
 };
 
-export const buildApiDeleteRequest = async (url) => {
-  const response = await fetch(url, {
-    method: "DELETE",
-  });
-  if (!response.ok) {
-    throw new Error("Network response was not ok");
-  }
-};
+export { buildApiPutRequest, buildApiPostRequest, fetchTasks, API_URL };

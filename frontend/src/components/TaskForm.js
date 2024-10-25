@@ -21,7 +21,8 @@ const TaskForm = ({ onAdd, isSaving }) => {
         onChange={(e) => setTitle(e.target.value)}
         required
       />
-      <textarea
+      <input
+        type="text"
         placeholder="Task Description"
         value={description}
         onChange={(e) => setDescription(e.target.value)}

@@ -1,53 +1,32 @@
-:root {
-  --base-font-size: 16px;
-}
-
-.todo-container {
-  max-width: 31.25rem;
+.todo-list-container {
+  max-width: 600px;
   margin: 0 auto;
-  padding: 3.125rem;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  background-color: #f9f9f9;
 }
 
-.todo-header {
+h1 {
   text-align: center;
-  position: relative;
-  background-color: white;
-  color: black;
+  color: #333;
 }
 
-.todo-title {
-  font-size: 2.125rem;
-  font-weight: bold;
-  cursor: pointer;
-  margin-bottom: 3.125rem;
-  display: inline-block;
+.task-items {
+  margin-top: 20px;
 }
 
-.controls-edit {
-  display: flex;
-  font-size: 0.875rem;
-  cursor: pointer;
-  position: absolute;
-  left: 28.125rem;
-  top: 80%;
-  transform: translateY(-50%);
+.task-items p {
+  text-align: center;
+  color: #777;
 }
 
-.controls-remove {
-  display: flex;
-  font-size: 0.875rem;
-  cursor: pointer;
-  position: absolute;
-  left: 24.375rem;
-  top: 80%;
-  transform: translateY(-50%);
-}
-
-.controls-tasks {
-  display: flex;
-  font-size: 0.875rem;
-  cursor: pointer;
-  position: absolute;
-  top: 80%;
-  transform: translateY(-50%) translateX(-4%);
+.task-item {
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  padding: 10px;
+  margin: 10px 0;
+  box-shadow: 0 1px 5px rgba(0, 0, 0, 0.1);
 }
