@@ -1,39 +1,36 @@
 import React, { useState } from "react";
-import "../css/TaskForm.css";
-import addIcon from "../assets/img/add-icon.svg";
 
-const TaskForm = ({ onAdd }) => {
-  const [newTodo, setNewTodo] = useState("");
+const TaskForm = ({ onAdd, isSaving }) => {
+  const [title, setTitle] = useState("");
+  const [description, setDescription] = useState("");
 
-  const addTodo = () => {
-    if (newTodo.trim()) {
-      const taskObject = {
-        text: newTodo,
-        completed: false,
-      };
-      onAdd(taskObject);
-      setNewTodo("");
-    }
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (!title || !description) return;
+    onAdd({ title, description });
+    setTitle("");
+    setDescription("");
   };
 
   return (
-    <div className="todo-input-container">
-      <div className="todo-checkbox"></div>
-
+    <form onSubmit={handleSubmit}>
       <input
         type="text"
-        className="todo-input"
-        placeholder="Add new"
-        value={newTodo}
-        onChange={(e) => setNewTodo(e.target.value)}
+        placeholder="Task Title"
+        value={title}
+        onChange={(e) => setTitle(e.target.value)}
+        required
       />
-
-      {newTodo && (
-        <button className="add-button" onClick={addTodo}>
-          <img src={addIcon} alt="Add" className="add-icon" />
-        </button>
-      )}
-    </div>
+      <textarea
+        placeholder="Task Description"
+        value={description}
+        onChange={(e) => setDescription(e.target.value)}
+        required
+      />
+      <button type="submit" disabled={isSaving}>
+        {isSaving ? "Saving..." : "Add Task"}
+      </button>
+    </form>
   );
 };
 

@@ -1,55 +1,44 @@
-const API_URL = "http://localhost:3000/tasks";
-
 export const buildApiGetRequest = async (url) => {
-  const response = await fetch(url, { method: "GET" });
-
+  const response = await fetch(url);
   if (!response.ok) {
-    throw new Error("Erro ao carregar dados: " + url);
+    throw new Error("Network response was not ok");
   }
-
   return await response.json();
 };
 
-export const buildApiPostRequest = async (url, body) => {
+export const buildApiPostRequest = async (url, data) => {
   const response = await fetch(url, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
     },
-    body: JSON.stringify(body),
+    body: JSON.stringify(data),
   });
-
   if (!response.ok) {
-    throw new Error("Erro ao enviar dados: " + url);
+    throw new Error("Network response was not ok");
   }
-
   return await response.json();
 };
 
-export const buildApiPutRequest = async (url, body) => {
+export const buildApiPutRequest = async (url, data) => {
   const response = await fetch(url, {
     method: "PUT",
     headers: {
       "Content-Type": "application/json",
     },
-    body: JSON.stringify(body),
+    body: JSON.stringify(data),
   });
-
   if (!response.ok) {
-    throw new Error("Erro ao atualizar dados: " + url);
+    throw new Error("Network response was not ok");
   }
-
   return await response.json();
 };
 
 export const buildApiDeleteRequest = async (url) => {
-  const response = await fetch(url, { method: "DELETE" });
-
+  const response = await fetch(url, {
+    method: "DELETE",
+  });
   if (!response.ok) {
-    throw new Error("Erro ao remover dados: " + url);
+    throw new Error("Network response was not ok");
   }
-
-  return await response.json();
 };
-
-export default API_URL;

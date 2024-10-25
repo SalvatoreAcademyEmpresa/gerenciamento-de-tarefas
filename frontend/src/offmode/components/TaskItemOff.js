@@ -1,6 +1,6 @@
 import React, { useRef, useEffect, useState } from "react";
 import { useDrag, useDrop } from "react-dnd";
-import TaskDetailsOff from "../components/descriptionOff/TaskDescriptionListOff";
+import TaskDetailsOff from "./descriptionOff/TaskDescriptionListOff";
 import Reminder from "./reminderOff/ReminderOff";
 import moveIcon from "../assets/img/move-icon.svg";
 import chatIcon from "../assets/img/chat.svg";
