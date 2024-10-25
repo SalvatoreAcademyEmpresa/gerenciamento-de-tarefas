@@ -45,8 +45,9 @@ const TodoList = ({ isOffline }) => {
     const newTaskObject = {
       title: newTask.title,
       description: newTask.description,
-      completed: false,
     };
+
+    console.log("Adding task:", newTaskObject);
 
     setIsSaving(true);
     try {
@@ -61,6 +62,7 @@ const TodoList = ({ isOffline }) => {
       toast.success("Task added successfully!");
     } catch (error) {
       toast.error("Houve um erro ao adicionar a tarefa.");
+      console.error(error);
     } finally {
       setIsSaving(false);
     }
@@ -90,8 +92,8 @@ const TodoList = ({ isOffline }) => {
 
     const taskId = tasks[index]._id;
     const updatedTask = {
-      ...tasks[index],
-      completed: !tasks[index].completed,
+      title: tasks[index].title,
+      description: tasks[index].description,
     };
 
     if (!isOffline) {
@@ -99,6 +101,7 @@ const TodoList = ({ isOffline }) => {
         await buildApiPutRequest(`${API_URL}/${taskId}`, updatedTask);
       } catch (error) {
         toast.error("Erro ao atualizar a tarefa.");
+        console.error(error);
       }
     } else {
       localStorage.setItem("tasks", JSON.stringify(updatedTasks));
