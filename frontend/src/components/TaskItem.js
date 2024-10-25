@@ -17,7 +17,7 @@ const TaskItem = ({
   removeTodo,
   toggleTodoCompletion,
 }) => {
-  const [editingText, setEditingText] = useState(todo.text);
+  const [editingText, setEditingText] = useState(todo.description); // Atualizado para usar 'description'
   const [showDetails, setShowDetails] = useState(false);
   const [showCommentIcon, setShowCommentIcon] = useState(false);
   const [isClicked, setIsClicked] = useState(false);
@@ -52,7 +52,7 @@ const TaskItem = ({
 
   const startEditing = () => {
     setEditingIndex(index);
-    setEditingText(todo.text);
+    setEditingText(todo.description); // Atualizado para 'description'
     setIsEditing(true);
   };
 
@@ -102,27 +102,34 @@ const TaskItem = ({
               onClick={startEditing}
             >
               <h2 className="task-title">{todo.title}</h2>
-              <p className="task-text">{todo.text}</p>
+              <p className="task-description">{todo.description}</p>{" "}
+              {/* Atualizado para exibir 'description' */}
             </div>
           )}
 
           {showCommentIcon && (
-            <>
-              <img
-                src={chatIcon}
-                alt="Comment Icon"
-                className="comment-icon"
-                onClick={() => setShowDetails(!showDetails)}
-              />
-              <Reminder />
-            </>
+            <img
+              src={chatIcon}
+              alt="Chat Icon"
+              className="comment-icon"
+              onClick={() => setShowDetails(!showDetails)}
+            />
           )}
         </div>
-      </li>
 
-      {showDetails && (
-        <TaskDetails task={todo} onClose={() => setShowDetails(false)} />
-      )}
+        {isCurrentEditing ? (
+          <div className="edit-buttons">
+            <button onClick={handleSaveEdit}>Save</button>
+            <button onClick={handleDelete}>Delete</button>
+          </div>
+        ) : (
+          <button className="delete-button" onClick={handleDelete}>
+            Delete
+          </button>
+        )}
+      </li>
+      {showDetails && <TaskDetails description={todo.description} />}{" "}
+      {/* Exibir a descrição completa */}
     </>
   );
 };

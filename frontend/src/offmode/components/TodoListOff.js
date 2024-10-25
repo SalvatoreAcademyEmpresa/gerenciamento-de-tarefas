@@ -3,8 +3,8 @@ import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
 import { ToastContainer, toast } from "react-toastify";
 
-import TaskFormOff from "../../AppOff/components/TaskFormOff";
-import TaskItemOff from "../../AppOff/components/TaskItemOff";
+import TaskFormOff from "./TaskFormOff";
+import TaskItemOff from "./TaskItemOff";
 
 import "react-toastify/dist/ReactToastify.css";
 import "../css/TodoListOff.css";

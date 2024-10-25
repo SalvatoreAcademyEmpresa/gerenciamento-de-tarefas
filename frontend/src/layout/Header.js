@@ -1,22 +1,28 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import "../css/Header.css";
 import menuIcon from "../assets/img/menu.svg";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faUserCircle,
-  faSearch,
-  faInbox,
-  faCalendarDay,
-  faTrashCan,
+  // faSearch,
+  // faInbox,
+  // faCalendarDay,
+  // faTrashCan,
   faSync,
   faEraser,
 } from "@fortawesome/free-solid-svg-icons";
 
 const Header = () => {
   const [isExpanded, setIsExpanded] = useState(false);
-  const [isOfflineMode, setIsOfflineMode] = useState(true);
+  const [isOfflineMode, setIsOfflineMode] = useState(
+    () => JSON.parse(localStorage.getItem("isOfflineMode")) ?? true
+  );
   const navigate = useNavigate();
+
+  useEffect(() => {
+    localStorage.setItem("isOfflineMode", JSON.stringify(isOfflineMode));
+  }, [isOfflineMode]);
 
   const toggleMenu = () => {
     setIsExpanded(!isExpanded);
@@ -72,13 +78,15 @@ const Header = () => {
             </button>
           </li>
 
-          <li>
-            <button className="reset-button" onClick={resetApp}>
-              <FontAwesomeIcon icon={faEraser} /> Reset Tasks and Title
-            </button>
-          </li>
+          {isOfflineMode && (
+            <li>
+              <button className="reset-button" onClick={resetApp}>
+                <FontAwesomeIcon icon={faEraser} /> Reset Tasks and Title
+              </button>
+            </li>
+          )}
 
-          <li>
+          {/* TODO: <li>
             <button className="add-task-button">
               <FontAwesomeIcon icon={faInbox} /> Add task
             </button>
@@ -88,6 +96,7 @@ const Header = () => {
             <FontAwesomeIcon icon={faSearch} />
             <span>Search</span>
           </li>
+
           <li>
             <FontAwesomeIcon icon={faCalendarDay} />
             <span>Reminder</span>
@@ -96,7 +105,7 @@ const Header = () => {
           <li>
             <FontAwesomeIcon icon={faTrashCan} />
             <span>Bin</span>
-          </li>
+          </li> */}
         </ul>
 
         <footer className="mini-footer">

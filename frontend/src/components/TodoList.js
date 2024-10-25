@@ -16,38 +16,50 @@ import {
 
 const API_URL = "http://localhost:3000/tasks";
 
-const TodoList = () => {
+const TodoList = ({ isOffline }) => {
   const [tasks, setTasks] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [editingIndex, setEditingIndex] = useState(null);
-  const [isEditing, setIsEditing] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
 
   useEffect(() => {
     const fetchTasks = async () => {
-      try {
-        const data = await buildApiGetRequest(API_URL);
-        setTasks(data);
-      } catch (error) {
-        toast.error("Erro ao carregar as tarefas.");
-        console.error(error);
-      } finally {
+      if (!isOffline) {
+        try {
+          const data = await buildApiGetRequest(API_URL);
+          setTasks(data);
+        } catch (error) {
+          toast.error("Erro ao carregar as tarefas.");
+        } finally {
+          setLoading(false);
+        }
+      } else {
+        const savedTasks = JSON.parse(localStorage.getItem("tasks")) || [];
+        setTasks(savedTasks);
         setLoading(false);
       }
     };
     fetchTasks();
-  }, []);
+  }, [isOffline]);
 
   const addTask = async (newTask) => {
-    const newTaskObject = { ...newTask, completed: false };
-    toast.success("Task added successfully!");
+    const newTaskObject = {
+      title: newTask.title,
+      description: newTask.description,
+      completed: false,
+    };
 
     setIsSaving(true);
     try {
-      const addedTask = await buildApiPostRequest(API_URL, newTaskObject);
-      setTasks((prevTasks) => [...prevTasks, addedTask]);
+      if (!isOffline) {
+        const addedTask = await buildApiPostRequest(API_URL, newTaskObject);
+        setTasks((prevTasks) => [...prevTasks, addedTask]);
+      } else {
+        const updatedTasks = [...tasks, newTaskObject];
+        setTasks(updatedTasks);
+        localStorage.setItem("tasks", JSON.stringify(updatedTasks));
+      }
+      toast.success("Task added successfully!");
     } catch (error) {
-      console.error(error);
       toast.error("Houve um erro ao adicionar a tarefa.");
     } finally {
       setIsSaving(false);
@@ -58,16 +70,17 @@ const TodoList = () => {
     const taskId = tasks[index]._id;
     const updatedTasks = tasks.filter((_, i) => i !== index);
     setTasks(updatedTasks);
-    setEditingIndex(null);
-    setIsEditing(false);
 
-    toast.error("Task deleted successfully!");
-
-    try {
-      await buildApiDeleteRequest(`${API_URL}/${taskId}`);
-    } catch (error) {
-      console.error(error);
+    if (!isOffline) {
+      try {
+        await buildApiDeleteRequest(`${API_URL}/${taskId}`);
+      } catch (error) {
+        toast.error("Erro ao deletar a tarefa.");
+      }
+    } else {
+      localStorage.setItem("tasks", JSON.stringify(updatedTasks));
     }
+    toast.success("Task deleted successfully!");
   };
 
   const toggleTaskCompletion = async (index) => {
@@ -75,15 +88,20 @@ const TodoList = () => {
     updatedTasks[index].completed = !updatedTasks[index].completed;
     setTasks(updatedTasks);
 
-    try {
-      const taskId = tasks[index]._id;
-      const updatedTask = {
-        ...tasks[index],
-        completed: !tasks[index].completed,
-      };
-      await buildApiPutRequest(`${API_URL}/${taskId}`, updatedTask);
-    } catch (error) {
-      console.error(error);
+    const taskId = tasks[index]._id;
+    const updatedTask = {
+      ...tasks[index],
+      completed: !tasks[index].completed,
+    };
+
+    if (!isOffline) {
+      try {
+        await buildApiPutRequest(`${API_URL}/${taskId}`, updatedTask);
+      } catch (error) {
+        toast.error("Erro ao atualizar a tarefa.");
+      }
+    } else {
+      localStorage.setItem("tasks", JSON.stringify(updatedTasks));
     }
   };
 
@@ -106,9 +124,6 @@ const TodoList = () => {
                 key={index}
                 index={index}
                 todo={task}
-                editingIndex={editingIndex}
-                setEditingIndex={setEditingIndex}
-                setIsEditing={setIsEditing}
                 removeTodo={removeTask}
                 toggleTodoCompletion={toggleTaskCompletion}
               />
