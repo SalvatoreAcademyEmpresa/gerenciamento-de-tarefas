@@ -20,6 +20,7 @@ const TodoList = ({ isOffline }) => {
   const [tasks, setTasks] = useState([]);
   const [loading, setLoading] = useState(true);
   const [isSaving, setIsSaving] = useState(false);
+  const [editingIndex, setEditingIndex] = useState(null);
 
   useEffect(() => {
     const fetchTasks = async () => {
@@ -45,9 +46,8 @@ const TodoList = ({ isOffline }) => {
     const newTaskObject = {
       title: newTask.title,
       description: newTask.description,
+      completed: false,
     };
-
-    console.log("Adding task:", newTaskObject);
 
     setIsSaving(true);
     try {
@@ -62,7 +62,6 @@ const TodoList = ({ isOffline }) => {
       toast.success("Task added successfully!");
     } catch (error) {
       toast.error("Houve um erro ao adicionar a tarefa.");
-      console.error(error);
     } finally {
       setIsSaving(false);
     }
@@ -92,8 +91,8 @@ const TodoList = ({ isOffline }) => {
 
     const taskId = tasks[index]._id;
     const updatedTask = {
-      title: tasks[index].title,
-      description: tasks[index].description,
+      ...tasks[index],
+      completed: !tasks[index].completed,
     };
 
     if (!isOffline) {
@@ -101,7 +100,24 @@ const TodoList = ({ isOffline }) => {
         await buildApiPutRequest(`${API_URL}/${taskId}`, updatedTask);
       } catch (error) {
         toast.error("Erro ao atualizar a tarefa.");
-        console.error(error);
+      }
+    } else {
+      localStorage.setItem("tasks", JSON.stringify(updatedTasks));
+    }
+  };
+
+  const editTask = async (index, updatedTaskData) => {
+    const taskId = tasks[index]._id;
+    const updatedTasks = [...tasks];
+    updatedTasks[index] = { ...updatedTasks[index], ...updatedTaskData };
+    setTasks(updatedTasks);
+
+    if (!isOffline) {
+      try {
+        await buildApiPutRequest(`${API_URL}/${taskId}`, updatedTaskData);
+        toast.success("Task updated successfully!");
+      } catch (error) {
+        toast.error("Erro ao atualizar a tarefa.");
       }
     } else {
       localStorage.setItem("tasks", JSON.stringify(updatedTasks));
@@ -129,6 +145,9 @@ const TodoList = ({ isOffline }) => {
                 todo={task}
                 removeTodo={removeTask}
                 toggleTodoCompletion={toggleTaskCompletion}
+                editTodo={editTask}
+                editingIndex={editingIndex}
+                setEditingIndex={setEditingIndex}
               />
             ))}
           </ul>

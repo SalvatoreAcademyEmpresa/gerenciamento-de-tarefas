@@ -7,51 +7,57 @@ import "../css/TaskItem.css";
 
 const ItemType = "TODO";
 
-const TaskItem = ({ todo, index, removeTodo, toggleTodoCompletion }) => {
-  const [isClicked, setIsClicked] = useState(false);
+const TaskItem = ({
+  todo,
+  index,
+  editingIndex,
+  setEditingIndex,
+  removeTodo,
+  toggleTodoCompletion,
+  editTodo,
+}) => {
+  const [editingText, setEditingText] = useState(todo.description);
+  const [editingTitle, setEditingTitle] = useState(todo.title);
+  const isCurrentEditing = editingIndex === index;
 
-  const [{ isDragging }, ref] = useDrag({
-    type: ItemType,
-    item: { index },
-    collect: (monitor) => ({
-      isDragging: monitor.isDragging(),
-    }),
-  });
+  const startEditing = () => {
+    setEditingIndex(index);
+    setEditingText(todo.description);
+    setEditingTitle(todo.title);
+  };
 
-  const [, drop] = useDrop({
-    accept: ItemType,
-    hover: (item) => {
-      if (item.index !== index) {
-        item.index = index;
-      }
-    },
-  });
+  const handleSaveEdit = () => {
+    if (editingText.trim() && editingTitle.trim()) {
+      editTodo(index, { title: editingTitle, description: editingText });
+      setEditingIndex(null);
+    }
+  };
 
   return (
-    <li
-      ref={(node) => ref(drop(node))}
-      className={`todo-item ${isClicked ? "clicked" : ""}`}
-      style={{ opacity: isDragging ? 0.5 : 1 }}
-      onClick={() => setIsClicked(!isClicked)}
-    >
+    <li className={`todo-item ${isCurrentEditing ? "editing" : ""}`}>
       <div className="todo-content">
-        <img src={moveIcon} alt="Move Icon" className="move-icon" />
-        <div className="todo-checkbox">
-          <input
-            type="checkbox"
-            checked={todo.completed}
-            onChange={() => toggleTodoCompletion(index)}
-          />
-          <div className="custom-checkbox"></div>
-        </div>
-        <div className={`todo-text ${todo.completed ? "completed" : ""}`}>
-          <h2 className="task-title">{todo.title}</h2>
-          <p className="task-description">{todo.description}</p>
-        </div>
+        {isCurrentEditing ? (
+          <>
+            <input
+              type="text"
+              value={editingTitle}
+              onChange={(e) => setEditingTitle(e.target.value)}
+            />
+            <input
+              type="text"
+              value={editingText}
+              onChange={(e) => setEditingText(e.target.value)}
+            />
+            <button onClick={handleSaveEdit}>Save</button>
+          </>
+        ) : (
+          <>
+            <h2 onClick={startEditing}>{todo.title}</h2>
+            <p onClick={startEditing}>{todo.description}</p>
+          </>
+        )}
+        <button onClick={() => removeTodo(index)}>Delete</button>
       </div>
-      <button className="delete-button" onClick={() => removeTodo(index)}>
-        Delete
-      </button>
     </li>
   );
 };
