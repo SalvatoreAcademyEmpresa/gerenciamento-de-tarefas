@@ -1,64 +1,43 @@
-import React, { useRef, useEffect, useState } from "react";
-import { useDrag, useDrop } from "react-dnd";
-import Reminder from "./reminder/Reminder";
-import moveIcon from "../assets/img/move-icon.svg";
-import chatIcon from "../assets/img/chat.svg";
+import React, { useState } from "react";
 import "../css/TaskItem.css";
 
-const ItemType = "TODO";
-
-const TaskItem = ({
-  todo,
-  index,
-  editingIndex,
-  setEditingIndex,
-  removeTodo,
-  toggleTodoCompletion,
-  editTodo,
-}) => {
-  const [editingText, setEditingText] = useState(todo.description);
-  const [editingTitle, setEditingTitle] = useState(todo.title);
-  const isCurrentEditing = editingIndex === index;
-
-  const startEditing = () => {
-    setEditingIndex(index);
-    setEditingText(todo.description);
-    setEditingTitle(todo.title);
-  };
+const TaskItem = ({ task, onEdit, onDelete }) => {
+  const [isEditing, setIsEditing] = useState(false);
+  const [title, setTitle] = useState(task.title);
+  const [description, setDescription] = useState(task.description);
 
   const handleSaveEdit = () => {
-    if (editingText.trim() && editingTitle.trim()) {
-      editTodo(index, { title: editingTitle, description: editingText });
-      setEditingIndex(null);
-    }
+    onEdit({ title, description });
+    setIsEditing(false);
   };
 
   return (
-    <li className={`todo-item ${isCurrentEditing ? "editing" : ""}`}>
-      <div className="todo-content">
-        {isCurrentEditing ? (
-          <>
-            <input
-              type="text"
-              value={editingTitle}
-              onChange={(e) => setEditingTitle(e.target.value)}
-            />
-            <input
-              type="text"
-              value={editingText}
-              onChange={(e) => setEditingText(e.target.value)}
-            />
-            <button onClick={handleSaveEdit}>Save</button>
-          </>
-        ) : (
-          <>
-            <h2 onClick={startEditing}>{todo.title}</h2>
-            <p onClick={startEditing}>{todo.description}</p>
-          </>
-        )}
-        <button onClick={() => removeTodo(index)}>Delete</button>
-      </div>
-    </li>
+    <div className="task-item">
+      {" "}
+      {isEditing ? (
+        <div>
+          <input
+            type="text"
+            value={title}
+            onChange={(e) => setTitle(e.target.value)}
+          />
+          <input
+            type="text"
+            value={description}
+            onChange={(e) => setDescription(e.target.value)}
+          />
+          <button onClick={handleSaveEdit}>Save</button>
+          <button onClick={() => setIsEditing(false)}>Cancel</button>
+        </div>
+      ) : (
+        <div>
+          <h3>{task.title}</h3>
+          <p>{task.description}</p>
+          <button onClick={() => setIsEditing(true)}>Edit</button>
+          <button onClick={onDelete}>Delete</button>
+        </div>
+      )}
+    </div>
   );
 };
 
