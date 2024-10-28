@@ -1,9 +1,12 @@
-.task-item {
+.task-item-list {
   display: flex;
   align-items: center;
   gap: 10px;
-
+  margin-bottom: 15px;
   font-size: 18px;
+  color: #344054;
+  position: relative;
+  margin-bottom: 2.625rem;
 }
 
 .move-icon-list {
@@ -38,6 +41,46 @@
   margin-bottom: 15px;
 }
 
+.description-hover {
+  display: none;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  background-color: #ffffff;
+  padding: 5px;
+  border-radius: 5px;
+  font-size: 14px;
+  color: #667085;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  white-space: nowrap;
+}
+
+.task-item-list:hover .description-hover,
+.task-item-list:hover .icon-button {
+  display: block;
+}
+
+.icon-button {
+  display: none;
+  background: none;
+  border: none;
+  color: #344054;
+  cursor: pointer;
+  font-size: 16px;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.icon-button svg {
+  width: 16px;
+  height: 16px;
+}
+
+.icon-button:hover {
+  color: #000000;
+}
+
 .confirmation-modal {
   position: fixed;
   top: 0;
@@ -59,20 +102,7 @@
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
-.modal-content p {
-  color: #1d2939;
-  font-size: 16px;
-}
-
 .confirm-button {
-  background-color: #1d2939;
-  color: white;
-  padding: 10px 20px;
-  border: none;
-  border-radius: 20px;
-  cursor: pointer;
-  margin-top: 10px;
-
   display: block;
   margin: 1.25rem auto;
   padding: 0.625rem 1.25rem;
@@ -84,65 +114,6 @@
   border: none;
   border-radius: 8.75rem;
   cursor: pointer;
-}
-
-.cancel-button {
-  background-color: transparent;
-  color: #667085;
-  border: none;
-  cursor: pointer;
-  margin-top: 10px;
-}
-
-.task-item {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  margin-bottom: 15px;
-  font-size: 18px;
-  color: #344054;
-  position: relative;
-}
-
-.task-item .icon-button {
-  display: none;
-}
-
-.task-item:hover .icon-button {
-  display: flex;
-  align-items: center;
-  gap: 5px;
-}
-
-.icon-button {
-  background: none;
-  border: none;
-  color: #344054;
-  cursor: pointer;
-  font-size: 16px;
-}
-
-.icon-button svg {
-  width: 500px;
-  height: 25px;
-}
-
-.icon-button:hover svg {
-  fill: #000000;
-}
-
-.icon-button:hover {
-  color: #000000;
-}
-
-.confirm-button {
-  background-color: #1d2939;
-  color: white;
-  padding: 10px 20px;
-  border: none;
-  border-radius: 20px;
-  cursor: pointer;
-  margin-top: 10px;
 }
 
 .cancel-button {

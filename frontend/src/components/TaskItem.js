@@ -25,7 +25,7 @@ const TaskItem = ({ task, onEdit, onStartEdit, onDelete, isEditing }) => {
   };
 
   return (
-    <div className="task-item">
+    <div className="task-item-list">
       <img src={moveIcon} alt="Move icon" className="move-icon-list" />
       <input type="checkbox" className="custom-checkbox-list" />
       {isEditing ? (
@@ -47,8 +47,10 @@ const TaskItem = ({ task, onEdit, onStartEdit, onDelete, isEditing }) => {
       ) : (
         <div>
           <h3>{task.title}</h3>
-          <p>{task.description}</p>
-          <button onClick={() => onStartEdit()} className="icon-button">
+          <div className="description-hover">
+            <p>{task.description}</p>
+          </div>
+          <button onClick={onStartEdit} className="icon-button">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 24 24"
