@@ -2,11 +2,12 @@
   display: flex;
   align-items: center;
   gap: 10px;
-  margin-bottom: 15px;
+  margin-bottom: 18px;
   font-size: 18px;
   color: #344054;
   position: relative;
-  margin-bottom: 2.625rem;
+  margin-bottom: 2.825rem;
+  margin-top: 2.825rem;
 }
 
 .move-icon-list {
