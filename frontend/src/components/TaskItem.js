@@ -1,16 +1,33 @@
 import React, { useState } from "react";
 import "../css/TaskItem.css";
+import moveIcon from "../assets/img/move-icon.svg";
 
 const TaskItem = ({ task, onEdit, onStartEdit, onDelete, isEditing }) => {
   const [title, setTitle] = useState(task.title);
   const [description, setDescription] = useState(task.description);
+  const [showConfirmModal, setShowConfirmModal] = useState(false);
 
   const handleSaveEdit = () => {
     onEdit({ title, description });
   };
 
+  const handleDeleteClick = () => {
+    setShowConfirmModal(true);
+  };
+
+  const confirmDelete = () => {
+    onDelete();
+    setShowConfirmModal(false);
+  };
+
+  const cancelDelete = () => {
+    setShowConfirmModal(false);
+  };
+
   return (
     <div className="task-item">
+      <img src={moveIcon} alt="Move icon" className="move-icon" />
+      <input type="checkbox" className="custom-checkbox" />
       {isEditing ? (
         <div>
           <input
@@ -26,17 +43,29 @@ const TaskItem = ({ task, onEdit, onStartEdit, onDelete, isEditing }) => {
           <button className="save-button" onClick={handleSaveEdit}>
             Save
           </button>
-          {/* TODO:<button onClick={() => onStartEdit(null)}>Cancel</button> */}
         </div>
       ) : (
         <div>
           <h3>{task.title}</h3>
           <p>{task.description}</p>
           <button onClick={() => onStartEdit()}>Edit</button>
-          <button onClick={onDelete}>Delete</button>
+          <button onClick={handleDeleteClick}>Delete</button>
         </div>
       )}
-      {/* TODO:<div className="comments">Comentários sobre a tarefa</div>{" "} */}
+
+      {showConfirmModal && (
+        <div className="confirmation-modal">
+          <div className="modal-content">
+            <p>Are you sure you want to remove this?</p>
+            <button onClick={confirmDelete} className="confirm-button">
+              Remove
+            </button>
+            <button onClick={cancelDelete} className="cancel-button">
+              Cancel
+            </button>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

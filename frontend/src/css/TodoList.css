@@ -58,13 +58,6 @@ h1 {
   display: block;
 }
 
-.task-item::before {
-  content: "⬤⬤";
-  font-size: 10px;
-  color: #d0d5dd;
-  margin-right: 5px;
-}
-
 .comments {
   display: none;
   position: absolute;
