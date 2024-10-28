@@ -1,19 +1,16 @@
 import React, { useState } from "react";
 import "../css/TaskItem.css";
 
-const TaskItem = ({ task, onEdit, onDelete }) => {
-  const [isEditing, setIsEditing] = useState(false);
+const TaskItem = ({ task, onEdit, onStartEdit, onDelete, isEditing }) => {
   const [title, setTitle] = useState(task.title);
   const [description, setDescription] = useState(task.description);
 
   const handleSaveEdit = () => {
     onEdit({ title, description });
-    setIsEditing(false);
   };
 
   return (
     <div className="task-item">
-      {" "}
       {isEditing ? (
         <div>
           <input
@@ -26,17 +23,20 @@ const TaskItem = ({ task, onEdit, onDelete }) => {
             value={description}
             onChange={(e) => setDescription(e.target.value)}
           />
-          <button onClick={handleSaveEdit}>Save</button>
-          <button onClick={() => setIsEditing(false)}>Cancel</button>
+          <button className="save-button" onClick={handleSaveEdit}>
+            Save
+          </button>
+          {/* TODO:<button onClick={() => onStartEdit(null)}>Cancel</button> */}
         </div>
       ) : (
         <div>
           <h3>{task.title}</h3>
           <p>{task.description}</p>
-          <button onClick={() => setIsEditing(true)}>Edit</button>
+          <button onClick={() => onStartEdit()}>Edit</button>
           <button onClick={onDelete}>Delete</button>
         </div>
       )}
+      {/* TODO:<div className="comments">Comentários sobre a tarefa</div>{" "} */}
     </div>
   );
 };
