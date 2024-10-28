@@ -2,18 +2,17 @@
   display: flex;
   align-items: center;
   gap: 10px;
-  margin-bottom: 15px;
+
   font-size: 18px;
-  color: #101828;
 }
 
-.move-icon {
+.move-icon-list {
   width: 16px;
   height: 16px;
   cursor: move;
 }
 
-.custom-checkbox {
+.custom-checkbox-list {
   appearance: none;
   width: 16px;
   height: 16px;
@@ -24,7 +23,7 @@
   transition: background-color 0.2s ease;
 }
 
-.custom-checkbox:checked {
+.custom-checkbox-list:checked {
   background-color: #667085;
   border-color: #667085;
 }

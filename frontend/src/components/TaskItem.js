@@ -26,8 +26,8 @@ const TaskItem = ({ task, onEdit, onStartEdit, onDelete, isEditing }) => {
 
   return (
     <div className="task-item">
-      <img src={moveIcon} alt="Move icon" className="move-icon" />
-      <input type="checkbox" className="custom-checkbox" />
+      <img src={moveIcon} alt="Move icon" className="move-icon-list" />
+      <input type="checkbox" className="custom-checkbox-list" />
       {isEditing ? (
         <div>
           <input
