@@ -53,6 +53,7 @@
   color: #667085;
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
   white-space: nowrap;
+  transform: translateX(5rem);
 }
 
 .task-item-list:hover .description-hover,
@@ -70,11 +71,17 @@
   display: flex;
   align-items: center;
   gap: 5px;
+  cursor: pointer;
+  filter: invert(38%) sepia(6%) saturate(318%) hue-rotate(181deg)
+    brightness(90%) contrast(89%);
+  transform: translateX(15rem);
+  transform: translateY(-1rem, 20rem);
 }
 
 .icon-button svg {
-  width: 150px;
-  height: 30px;
+  width: 1.25rem;
+  height: 1.25rem;
+  margin-left: 0.5rem;
 }
 
 .icon-button:hover {
@@ -122,4 +129,9 @@
   border: none;
   cursor: pointer;
   margin-top: 10px;
+}
+
+.completed {
+  text-decoration: line-through;
+  color: gray;
 }

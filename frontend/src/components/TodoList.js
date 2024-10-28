@@ -17,9 +17,9 @@ const TodoList = () => {
   const [editingTaskIndex, setEditingTaskIndex] = useState(null);
   const [showAddTaskModal, setShowAddTaskModal] = useState(false);
   const [title, setTitle] = useState("Booking Movie Tickets");
+  const [completedTasks, setCompletedTasks] = useState({});
 
   useEffect(() => {
-    // Carrega as tarefas e o título do localStorage
     const loadTasks = async () => {
       try {
         const tasksFromApi = await fetchTasks();
@@ -28,6 +28,10 @@ const TodoList = () => {
         if (savedTitle) {
           setTitle(savedTitle);
         }
+
+        const savedCompletedTasks =
+          JSON.parse(localStorage.getItem("completedTasks")) || {};
+        setCompletedTasks(savedCompletedTasks);
       } catch (error) {
         console.error("Error fetching tasks:", error);
         toast.error("Erro ao carregar tarefas.");
@@ -87,6 +91,19 @@ const TodoList = () => {
     setEditingTaskIndex(null);
   };
 
+  const toggleTaskCompletion = (taskId) => {
+    const updatedCompletedTasks = {
+      ...completedTasks,
+      [taskId]: !completedTasks[taskId],
+    };
+
+    setCompletedTasks(updatedCompletedTasks);
+    localStorage.setItem(
+      "completedTasks",
+      JSON.stringify(updatedCompletedTasks)
+    );
+  };
+
   const startEditing = (index) => {
     setIsEditing(true);
     setEditingTaskIndex(index);
@@ -117,8 +134,9 @@ const TodoList = () => {
 
   return (
     <div className="todo-list-container">
-      {isEditing && <div className="editing-banner">Editing...</div>}
+      <h2 className="tasks-header">Tasks</h2>
       <h1
+        className="main-title"
         onClick={() => {
           const newTitle = prompt("Edit Title:", title);
           if (newTitle) {
@@ -128,7 +146,7 @@ const TodoList = () => {
       >
         {title}
       </h1>
-      <br /> <br />
+      <br /> <br /> <br />
       <div className="task-items">
         {tasks.length === 0 ? (
           <p>No tasks available. Add a new task!</p>
@@ -137,9 +155,11 @@ const TodoList = () => {
             <TaskItem
               key={task._id}
               task={task}
+              isCompleted={completedTasks[task._id] || false}
               onEdit={(updatedTaskData) => saveTask(updatedTaskData, index)}
               onStartEdit={() => startEditing(index)}
               onDelete={() => deleteTask(task._id)}
+              onToggleCompletion={() => toggleTaskCompletion(task._id)}
               isEditing={isEditing && editingTaskIndex === index}
             />
           ))
