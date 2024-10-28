@@ -94,3 +94,62 @@
   cursor: pointer;
   margin-top: 10px;
 }
+
+.task-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 15px;
+  font-size: 18px;
+  color: #344054;
+  position: relative;
+}
+
+.task-item .icon-button {
+  display: none;
+}
+
+.task-item:hover .icon-button {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.icon-button {
+  background: none;
+  border: none;
+  color: #344054;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.icon-button svg {
+  width: 500px;
+  height: 25px;
+}
+
+.icon-button:hover svg {
+  fill: #000000;
+}
+
+.icon-button:hover {
+  color: #000000;
+}
+
+.confirm-button {
+  background-color: #1d2939;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 20px;
+  cursor: pointer;
+  margin-top: 10px;
+}
+
+.cancel-button {
+  background-color: transparent;
+  color: #667085;
+  border: none;
+  cursor: pointer;
+  margin-top: 10px;
+}

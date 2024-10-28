@@ -108,7 +108,7 @@ const TodoList = () => {
     <div className="todo-list-container">
       {isEditing && <div className="editing-banner">Editing...</div>}
       {/* TODO: <h1>Booking Movie Tickets</h1> */}
-
+      <br />
       <div className="task-items">
         {tasks.length === 0 ? (
           <p>No tasks available. Add a new task!</p>
@@ -125,11 +125,9 @@ const TodoList = () => {
           ))
         )}
       </div>
-
       <div className="add-new-task" onClick={() => setShowAddTaskModal(true)}>
         Add new
       </div>
-
       {showAddTaskModal && (
         <div className="modal">
           <TaskForm onAdd={addTask} />
