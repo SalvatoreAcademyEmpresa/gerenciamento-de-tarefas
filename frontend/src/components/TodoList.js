@@ -135,6 +135,7 @@ const TodoList = () => {
   return (
     <div className="todo-list-container">
       <h2 className="tasks-header">Tasks</h2>
+      {isEditing && <div className="editing-banner">Editing...</div>}
       <h1
         className="main-title"
         onClick={() => {
@@ -149,7 +150,7 @@ const TodoList = () => {
       <br /> <br /> <br />
       <div className="task-items">
         {tasks.length === 0 ? (
-          <p>No tasks available. Add a new task!</p>
+          <p>No tasks available. Check your connection to the server!</p>
         ) : (
           tasks.map((task, index) => (
             <TaskItem

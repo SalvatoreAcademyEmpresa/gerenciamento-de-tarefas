@@ -12,10 +12,11 @@
   color: #98a2b3;
   cursor: pointer;
   margin-right: 0.3125rem;
+  margin-bottom: 35px;
   font-size: 0.875rem;
-  padding: 0.625rem;
-  top: 30px;
-  transform: translateY(6rem);
+  padding: -1.625rem;
+  top: 45px;
+  transform: translateY(9rem);
   transform: translateX(-4rem, 6.15rem);
 }
 

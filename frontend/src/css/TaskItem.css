@@ -61,7 +61,33 @@
   display: block;
 }
 
-.icon-button {
+.icon-edit-button-list {
+  width: 1.25rem;
+  height: 1.25rem;
+  margin-left: 0.5rem;
+  cursor: pointer;
+  transform: translateX(4rem);
+}
+
+.icon-delete-button-list {
+  width: 1.25rem;
+  height: 1.25rem;
+  margin-left: 0.5rem;
+  cursor: pointer;
+  transform: translateX(5rem);
+}
+
+.reminder-icon-list {
+  width: 1.25rem;
+  height: 1.25rem;
+  margin-left: 0.5rem;
+  cursor: pointer;
+  filter: invert(38%) sepia(6%) saturate(318%) hue-rotate(181deg)
+    brightness(90%) contrast(89%);
+  transform: translateX(6rem);
+}
+
+.icon-delete-button {
   display: none;
   background: none;
   border: none;
@@ -72,8 +98,7 @@
   align-items: center;
   gap: 5px;
   cursor: pointer;
-  filter: invert(38%) sepia(6%) saturate(318%) hue-rotate(181deg)
-    brightness(90%) contrast(89%);
+
   transform: translateX(15rem);
   transform: translateY(-1rem, 20rem);
 }

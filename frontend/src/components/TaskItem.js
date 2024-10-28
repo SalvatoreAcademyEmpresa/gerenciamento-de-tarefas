@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import "../css/TaskItem.css";
 import moveIcon from "../assets/img/move-icon.svg";
+import Reminder from "./reminder/Reminder";
 
 const TaskItem = ({
   task,
@@ -74,12 +75,17 @@ const TaskItem = ({
             className="icon-buttons"
             style={{ display: isHovered ? "flex" : "none" }}
           >
-            <button onClick={onStartEdit} className="icon-button">
+            <button onClick={onStartEdit} className="icon-edit-button-list">
               ✏️
             </button>
-            <button onClick={handleDeleteClick} className="icon-button">
+            <button
+              onClick={handleDeleteClick}
+              className="icon-delete-button-list"
+            >
               🗑️
             </button>
+
+            <Reminder />
           </div>
         </div>
       )}

@@ -11,7 +11,7 @@ const Reminder = ({ onReminderClick }) => {
     <img
       src={calendarIcon}
       alt="Reminder Icon"
-      className="reminder-icon"
+      className="reminder-icon-list"
       onClick={onReminderClick || handleReminderClick}
     />
   );

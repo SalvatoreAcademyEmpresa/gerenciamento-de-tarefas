@@ -7,11 +7,11 @@ const TaskForm = ({ onAdd }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (title && description) {
-      onAdd({ title, description }); // Chama a função de adição passando os dados
-      setTitle(""); // Limpa o campo de título
-      setDescription(""); // Limpa o campo de descrição
+      onAdd({ title, description });
+      setTitle("");
+      setDescription("");
     } else {
-      alert("Por favor, preencha todos os campos."); // Alerta se os campos estiverem vazios
+      alert("Por favor, preencha todos os campos.");
     }
   };
 
@@ -31,7 +31,7 @@ const TaskForm = ({ onAdd }) => {
         onChange={(e) => setDescription(e.target.value)}
         required
       />
-      <button type="submit">Add Task</button>
+      <button type="submit">➕</button>
     </form>
   );
 };

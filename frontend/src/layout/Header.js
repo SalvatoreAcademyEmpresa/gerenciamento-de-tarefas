@@ -54,8 +54,8 @@ const Header = () => {
         </button>
         <div className="header-title">
           {isOfflineMode
-            ? "Futuristic Todo List | v1.0.0"
-            : "Futuristic Todo List | v1.0.0 | Version in Development Phase"}
+            ? "Futuristic Todo List | v1.0.2"
+            : "Futuristic Todo List | Version in Development Phase"}
         </div>
       </nav>
 
