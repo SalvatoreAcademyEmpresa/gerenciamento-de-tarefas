@@ -1,78 +1,40 @@
-:root {
-  --base-font-size: 16px;
+.todo-input-container .todo-input::placeholder {
+  color: #98a2b3;
 }
 
-.todo-input-container {
-  display: flex;
-  align-items: center;
-  margin-top: 0.625rem;
-  padding: 0.625rem;
-  background-color: white;
-  border: 0.0625rem solid white;
-  border-radius: 0.25rem;
-  margin-bottom: 0.625rem;
-}
-
-.todo-input {
-  flex-grow: 1;
-  padding: 0.625rem;
-  font-size: 1rem;
-  border: 0.0625rem solid white;
-  border-radius: 0.25rem;
-  margin-right: 0.625rem;
+.todo-checkbox {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background-color: #d0d5dd;
+  margin-right: 10px;
 }
 
 .add-button {
+  background-color: transparent;
+  color: #98a2b3;
+  font-size: 14px;
+  font-weight: normal;
+  border: none;
+  cursor: pointer;
   display: flex;
   align-items: center;
-  padding: 0.625rem;
-  font-size: 1rem;
-  border: none;
-  border-radius: 0.25rem;
-  background-color: transparent;
-  color: #f2f4f7;
-  cursor: pointer;
 }
 
-.add-icon {
-  width: 1.25rem;
-  height: 1.25rem;
-  margin-left: 0.5rem;
-  filter: invert(34%) sepia(5%) saturate(173%) hue-rotate(189deg)
-  brightness(92%) contrast(88%);
+.add-button img {
+  filter: invert(66%) sepia(4%) saturate(116%) hue-rotate(190deg)
+    brightness(97%) contrast(92%);
+  width: 14px;
+  height: 14px;
+  margin-right: 5px;
 }
 
-.save-button {
-  display: block;
-  margin: 1.25rem auto;
-  padding: 0.625rem 1.25rem;
-  width: 6.25rem;
-  height: 6.25rem;
-  font-size: 1rem;
+.editing-banner {
   background-color: #1d2939;
   color: #fff;
-  border: none;
-  border-radius: 8.75rem;
-  cursor: pointer;
-}
-
-.edit-title {
-  background: none;
-  border: none;
-  color: #98a2b3;
-  cursor: pointer;
-  margin-right: 0.3125rem;
-  font-size: 0.875rem;
-  padding: 0.625rem;
-  transform: translateY(-0.25rem);
-}
-
-.remove {
-  background: none;
-  border: none;
-  color: #98a2b3;
-  cursor: pointer;
-  margin-right: 0.3125rem;
-  font-size: 0.875rem;
-  padding: 0.0625rem;
+  padding: 10px;
+  border-radius: 15px;
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 15px;
 }

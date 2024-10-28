@@ -1,43 +1,163 @@
-.task-item {
-  background-color: #fff;
-  border: 1px solid #ddd;
-  border-radius: 4px;
-  padding: 10px;
-  margin: 10px 0;
-  box-shadow: 0 1px 5px rgba(0, 0, 0, 0.1);
-  transition: box-shadow 0.2s;
+.task-item-list {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 18px;
+  font-size: 18px;
+  color: #344054;
+  position: relative;
+  margin-bottom: 2.825rem;
+  margin-top: 2.825rem;
 }
 
-.task-item:hover {
-  box-shadow: 0 3px 15px rgba(0, 0, 0, 0.2);
+.move-icon-list {
+  width: 16px;
+  height: 16px;
+  cursor: move;
 }
 
-.task-item h3 {
-  margin: 0 0 5px;
-  color: #333;
-}
-
-.task-item p {
-  margin: 5px 0;
-  color: #666;
-}
-
-.task-item button {
-  margin-right: 5px;
-  padding: 5px 10px;
-  border: none;
-  border-radius: 3px;
+.custom-checkbox-list {
+  appearance: none;
+  width: 16px;
+  height: 16px;
+  border: 2px solid #d0d5dd;
+  border-radius: 50%;
+  position: relative;
   cursor: pointer;
-  transition: background-color 0.2s;
+  transition: background-color 0.2s ease;
 }
 
-.task-item button:hover {
-  background-color: #f0f0f0;
+.custom-checkbox-list:checked {
+  background-color: #667085;
+  border-color: #667085;
 }
 
-.task-item input {
-  margin-right: 5px;
+.editing-banner {
+  background-color: #1d2939;
+  color: #fff;
+  padding: 10px;
+  border-radius: 15px;
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 15px;
+}
+
+.description-hover {
+  display: none;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  background-color: #ffffff;
   padding: 5px;
-  border: 1px solid #ccc;
-  border-radius: 3px;
+  border-radius: 5px;
+  font-size: 14px;
+  color: #667085;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  white-space: nowrap;
+  transform: translateX(5rem);
+}
+
+.task-item-list:hover .description-hover,
+.task-item-list:hover .icon-button {
+  display: block;
+}
+
+.icon-edit-button-list {
+  width: 1.25rem;
+  height: 1.25rem;
+  margin-left: 0.5rem;
+  cursor: pointer;
+  transform: translateX(4rem);
+}
+
+.icon-delete-button-list {
+  width: 1.25rem;
+  height: 1.25rem;
+  margin-left: 0.5rem;
+  cursor: pointer;
+  transform: translateX(5rem);
+}
+
+.reminder-icon-list {
+  width: 1.25rem;
+  height: 1.25rem;
+  margin-left: 0.5rem;
+  cursor: pointer;
+  filter: invert(38%) sepia(6%) saturate(318%) hue-rotate(181deg)
+    brightness(90%) contrast(89%);
+  transform: translateX(6rem);
+}
+
+.icon-delete-button {
+  display: none;
+  background: none;
+  border: none;
+  color: #344054;
+  cursor: pointer;
+  font-size: 16px;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  cursor: pointer;
+
+  transform: translateX(15rem);
+  transform: translateY(-1rem, 20rem);
+}
+
+.icon-button svg {
+  width: 1.25rem;
+  height: 1.25rem;
+  margin-left: 0.5rem;
+}
+
+.icon-button:hover {
+  color: #000000;
+}
+
+.confirmation-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 1000;
+}
+
+.modal-content {
+  background-color: #f7f8fa;
+  padding: 20px;
+  border-radius: 10px;
+  text-align: center;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.confirm-button {
+  display: block;
+  margin: 1.25rem auto;
+  padding: 0.625rem 1.25rem;
+  width: 6.25rem;
+  height: 6.25rem;
+  font-size: 1rem;
+  background-color: #1d2939;
+  color: #fff;
+  border: none;
+  border-radius: 8.75rem;
+  cursor: pointer;
+}
+
+.cancel-button {
+  background-color: transparent;
+  color: #667085;
+  border: none;
+  cursor: pointer;
+  margin-top: 10px;
+}
+
+.completed {
+  text-decoration: line-through;
+  color: gray;
 }
