@@ -16,12 +16,18 @@ const TodoList = () => {
   const [isEditing, setIsEditing] = useState(false);
   const [editingTaskIndex, setEditingTaskIndex] = useState(null);
   const [showAddTaskModal, setShowAddTaskModal] = useState(false);
+  const [title, setTitle] = useState("Booking Movie Tickets");
 
   useEffect(() => {
+    // Carrega as tarefas e o título do localStorage
     const loadTasks = async () => {
       try {
         const tasksFromApi = await fetchTasks();
         setTasks(tasksFromApi);
+        const savedTitle = localStorage.getItem("title");
+        if (savedTitle) {
+          setTitle(savedTitle);
+        }
       } catch (error) {
         console.error("Error fetching tasks:", error);
         toast.error("Erro ao carregar tarefas.");
@@ -104,11 +110,25 @@ const TodoList = () => {
     }
   };
 
+  const editTitle = (newTitle) => {
+    setTitle(newTitle);
+    localStorage.setItem("title", newTitle);
+  };
+
   return (
     <div className="todo-list-container">
       {isEditing && <div className="editing-banner">Editing...</div>}
-      {/* TODO: <h1>Booking Movie Tickets</h1> */}
-      <br />
+      <h1
+        onClick={() => {
+          const newTitle = prompt("Edit Title:", title);
+          if (newTitle) {
+            editTitle(newTitle);
+          }
+        }}
+      >
+        {title}
+      </h1>
+      <br /> <br />
       <div className="task-items">
         {tasks.length === 0 ? (
           <p>No tasks available. Add a new task!</p>
