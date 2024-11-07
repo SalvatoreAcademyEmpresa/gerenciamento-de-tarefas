@@ -2,6 +2,16 @@
   color: #98a2b3;
 }
 
+.todo-input {
+  flex-grow: 1;
+  padding: 0.625rem;
+  font-size: 1rem;
+  border: 1px solid #f2f4f7;
+  border-radius: 0.25rem;
+  margin-right: 0.625rem;
+  color: #344054;
+}
+
 .todo-checkbox {
   width: 10px;
   height: 10px;

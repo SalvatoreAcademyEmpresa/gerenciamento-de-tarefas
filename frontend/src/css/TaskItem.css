@@ -2,34 +2,38 @@
   display: flex;
   align-items: center;
   gap: 10px;
-  margin-bottom: 18px;
-  font-size: 18px;
+  margin-bottom: 1rem;
+  font-size: 1rem;
   color: #344054;
   position: relative;
-  margin-bottom: 2.825rem;
-  margin-top: 2.825rem;
+  background-color: white;
+  border: 1px solid white;
+  border-radius: 0.25rem;
+  padding: 0.625rem;
+  margin-left: 2rem;
 }
 
 .move-icon-list {
-  width: 16px;
-  height: 16px;
+  width: 1rem;
+  height: 1rem;
   cursor: move;
+  margin-right: 10px;
 }
 
 .custom-checkbox-list {
   appearance: none;
-  width: 16px;
-  height: 16px;
-  border: 2px solid #d0d5dd;
+  width: 1rem;
+  height: 1rem;
+  border: 1px solid #d0d5dd;
   border-radius: 50%;
-  position: relative;
   cursor: pointer;
-  transition: background-color 0.2s ease;
+  margin-right: 10px;
+  background-color: #d0d5dd;
 }
 
 .custom-checkbox-list:checked {
-  background-color: #667085;
-  border-color: #667085;
+  background-color: #1d2939;
+  border-color: #1d2939;
 }
 
 .editing-banner {
@@ -62,30 +66,17 @@
   display: block;
 }
 
-.icon-edit-button-list {
-  width: 1.25rem;
-  height: 1.25rem;
-  margin-left: 0.5rem;
-  cursor: pointer;
-  transform: translateX(4rem);
-}
-
-.icon-delete-button-list {
-  width: 1.25rem;
-  height: 1.25rem;
-  margin-left: 0.5rem;
-  cursor: pointer;
-  transform: translateX(5rem);
-}
-
+.icon-edit-button-list,
+.icon-delete-button-list,
+.chat-icon,
 .reminder-icon-list {
-  width: 1.25rem;
-  height: 1.25rem;
-  margin-left: 0.5rem;
+  width: 1rem;
+  height: 1rem;
   cursor: pointer;
-  filter: invert(38%) sepia(6%) saturate(318%) hue-rotate(181deg)
-    brightness(90%) contrast(89%);
-  transform: translateX(6rem);
+  margin-left: 0.25rem;
+  background: none;
+  border: none;
+  padding: 0;
 }
 
 .icon-delete-button {
@@ -160,4 +151,89 @@
 .completed {
   text-decoration: line-through;
   color: gray;
+}
+
+.todo-list-container {
+  max-width: 31.25rem;
+  margin: 0 auto;
+  padding: 2rem;
+  background-color: white;
+  border-radius: 0.25rem;
+}
+
+.tasks-header {
+  text-align: left;
+  font-size: 0.875rem;
+  color: #98a2b3;
+  margin-bottom: 1rem;
+  margin-left: 2rem;
+}
+
+.main-title {
+  font-size: 2.125rem;
+  font-weight: bold;
+  color: #1d2939;
+  margin-bottom: 2rem;
+  text-align: center;
+  cursor: pointer;
+}
+
+.task-items {
+  margin-bottom: 2rem;
+}
+
+.add-new-task {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 1rem;
+  color: #667085;
+  cursor: pointer;
+  margin-top: 1rem;
+  margin-left: 2rem;
+}
+
+.icon-buttons {
+  display: none;
+  position: absolute;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  gap: 0.25rem;
+}
+
+.task-item-list:hover .icon-buttons {
+  display: flex;
+}
+
+.edit-input {
+  flex-grow: 1;
+  padding: 0.625rem;
+  font-size: 1rem;
+  border: 1px solid #f2f4f7;
+  border-radius: 0.25rem;
+  margin-right: 0.625rem;
+}
+
+.save-button {
+  padding: 0.5rem 1rem;
+  background-color: #1d2939;
+  color: white;
+  border: none;
+  border-radius: 0.25rem;
+  cursor: pointer;
+  margin-left: 0.5rem;
+}
+
+.chat-icon {
+  width: 1rem;
+  height: 1rem;
+  cursor: pointer;
+  margin-left: 0.5rem;
+}
+
+.task-item-list h3 {
+  font-weight: normal;
+  text-decoration: none;
+  color: #344054;
 }
