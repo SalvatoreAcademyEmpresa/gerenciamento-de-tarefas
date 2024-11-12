@@ -1,6 +1,6 @@
 {
   "name": "gerenciamento-de-tarefas",
-  "version": "1.0.0",
+  "version": "1.0.2",
   "description": "<figure><img src=\"./docs/todo-list.avif\" alt=\"\"><figcaption></figcaption></figure>",
   "main": "index.js",
   "directories": {
