@@ -1,18 +1,21 @@
 const Task = require("./tasks.model");
 
 async function updateTaskOrder(taskUpdates) {
-  const updates = taskUpdates.map(update => ({
+  const updates = taskUpdates.map((update) => ({
     updateOne: {
       filter: { _id: update.id },
-      update: { order: update.order },
-    }
+      update: { $set: { order: update.order } },
+    },
   }));
-  return Task.bulkWrite(updates);
+
+  await Task.bulkWrite(updates);
+  // Retorna as tarefas atualizadas e ordenadas
+  return Task.find().sort({ order: 1 });
 }
 
 function readAll() {
-  // Retorna todas as tarefas
-  return Task.find();
+  // Retorna todas as tarefas ordenadas pelo campo 'order'
+  return Task.find().sort({ order: 1 });
 }
 
 /**
@@ -24,9 +27,16 @@ function readById(id) {
   return Task.findById(id);
 }
 
-function create(newItem) {
-  // Cria uma nova tarefa e a salva
-  const task = new Task(newItem);
+async function create(newItem) {
+  // Encontra a maior ordem atual
+  const maxOrderTask = await Task.findOne().sort({ order: -1 });
+  const nextOrder = maxOrderTask ? maxOrderTask.order + 1 : 0;
+
+  // Cria uma nova tarefa com a próxima ordem
+  const task = new Task({
+    ...newItem,
+    order: nextOrder,
+  });
   return task.save();
 }
 
