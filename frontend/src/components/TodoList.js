@@ -40,6 +40,30 @@ const TodoList = () => {
     loadTasks();
   }, []);
 
+  const updateOrder = async (newOrderTasks) => {
+    try {
+      await buildApiPutRequest(`${API_URL}/order`, newOrderTasks);
+      setTasks(newOrderTasks);
+      toast.success("Ordem das tarefas atualizada com sucesso!");
+    } catch (error) {
+      console.error("Erro ao atualizar ordem:", error);
+      toast.error("Erro ao atualizar ordem das tarefas.");
+    }
+  };
+
+  const handleTaskOrderChange = (draggedIndex, targetIndex) => {
+    const reorderedTasks = [...tasks];
+    const [removed] = reorderedTasks.splice(draggedIndex, 1);
+    reorderedTasks.splice(targetIndex, 0, removed);
+
+    const reorderedWithOrder = reorderedTasks.map((task, index) => ({
+      ...task,
+      order: index,
+    }));
+
+    updateOrder(reorderedWithOrder);
+  };
+
   const addTask = async (newTaskData) => {
     const requestBody = {
       title: newTaskData.title,
@@ -134,8 +158,6 @@ const TodoList = () => {
 
   return (
     <div className="todo-list-container">
-      <h2 className="tasks-header">Tasks</h2>
-      {isEditing && <div className="editing-banner">Editing...</div>}
       <h1
         className="main-title"
         onClick={() => {
@@ -147,7 +169,8 @@ const TodoList = () => {
       >
         {title}
       </h1>
-      <br /> <br /> <br />
+      <h2 className="tasks-header">Tasks</h2>
+      {isEditing && <div className="editing-banner">Editing...</div>}
       <div className="task-items">
         {tasks.length === 0 ? (
           <p>No tasks available. Check your connection to the server!</p>
@@ -161,6 +184,9 @@ const TodoList = () => {
               onStartEdit={() => startEditing(index)}
               onDelete={() => deleteTask(task._id)}
               onToggleCompletion={() => toggleTaskCompletion(task._id)}
+              onMove={(draggedIndex, targetIndex) =>
+                handleTaskOrderChange(draggedIndex, targetIndex)
+              }
               isEditing={isEditing && editingTaskIndex === index}
             />
           ))
