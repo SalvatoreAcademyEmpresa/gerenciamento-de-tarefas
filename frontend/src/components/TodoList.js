@@ -178,13 +178,12 @@ const TodoList = () => {
             <TaskItem
               key={task._id}
               task={task}
-              index={index}
               isCompleted={completedTasks[task._id] || false}
               onEdit={(updatedTaskData) => saveTask(updatedTaskData, index)}
               onStartEdit={() => startEditing(index)}
               onDelete={() => deleteTask(task._id)}
               onToggleCompletion={() => toggleTaskCompletion(task._id)}
-              onMove={handleTaskOrderChange}
+              onMoveTask={handleTaskOrderChange}
               isEditing={isEditing && editingTaskIndex === index}
             />
           ))
