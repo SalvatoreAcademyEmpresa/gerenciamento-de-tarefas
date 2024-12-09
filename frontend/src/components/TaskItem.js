@@ -8,13 +8,12 @@ const TaskItem = ({
   task,
   onEdit,
   onDelete,
-  onMove,
+  onMoveTask,
   onToggleCompletion,
   isEditing,
   isCompleted,
   onStartEdit,
   onReminder,
-  index,
 }) => {
   const [title, setTitle] = useState(task.title);
   const [description, setDescription] = useState(task.description);
@@ -40,13 +39,17 @@ const TaskItem = ({
   };
 
   const handleDragStart = (event) => {
-    event.dataTransfer.setData("index", index.toString());
+    if (!task.id) {
+      console.error("Task ID is undefined or missing");
+      return;
+    }
+    event.dataTransfer.setData("text", task.id);
   };
 
   const handleDrop = (event) => {
     event.preventDefault();
-    const draggedIndex = parseInt(event.dataTransfer.getData("index"));
-    onMove(draggedIndex, index);
+    const droppedTaskId = event.dataTransfer.getData("text");
+    onMoveTask(droppedTaskId, task.id);
   };
 
   const toggleDescription = () => {
