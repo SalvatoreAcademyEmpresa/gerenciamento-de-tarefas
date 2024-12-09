@@ -39,6 +39,10 @@ const TaskItem = ({
   };
 
   const handleDragStart = (event) => {
+    if (!task.id) {
+      console.error("Task ID is undefined or missing");
+      return;
+    }
     event.dataTransfer.setData("text", task.id);
   };
 

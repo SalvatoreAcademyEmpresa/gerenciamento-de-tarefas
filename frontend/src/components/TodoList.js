@@ -42,12 +42,17 @@ const TodoList = () => {
 
   const updateOrder = async (newOrderTasks) => {
     try {
-      await buildApiPutRequest(`${API_URL}/order`, newOrderTasks);
+      const taskUpdates = newOrderTasks.map((task, index) => ({
+        id: task._id,
+        order: index,
+      }));
+
+      await buildApiPutRequest(`${API_URL}/order`, taskUpdates);
       setTasks(newOrderTasks);
-      toast.success("Ordem das tarefas atualizada com sucesso!");
+      toast.success("Task order updated successfully!");
     } catch (error) {
-      console.error("Erro ao atualizar ordem:", error);
-      toast.error("Erro ao atualizar ordem das tarefas.");
+      console.error("Error updating order:", error);
+      toast.error("Error updating task order.");
     }
   };
 
@@ -55,13 +60,7 @@ const TodoList = () => {
     const reorderedTasks = [...tasks];
     const [removed] = reorderedTasks.splice(draggedIndex, 1);
     reorderedTasks.splice(targetIndex, 0, removed);
-
-    const reorderedWithOrder = reorderedTasks.map((task, index) => ({
-      ...task,
-      order: index,
-    }));
-
-    updateOrder(reorderedWithOrder);
+    updateOrder(reorderedTasks);
   };
 
   const addTask = async (newTaskData) => {
@@ -184,9 +183,7 @@ const TodoList = () => {
               onStartEdit={() => startEditing(index)}
               onDelete={() => deleteTask(task._id)}
               onToggleCompletion={() => toggleTaskCompletion(task._id)}
-              onMove={(draggedIndex, targetIndex) =>
-                handleTaskOrderChange(draggedIndex, targetIndex)
-              }
+              onMoveTask={handleTaskOrderChange}
               isEditing={isEditing && editingTaskIndex === index}
             />
           ))

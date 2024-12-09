@@ -1,12 +1,12 @@
 const service = require("./tasks.service");
-const tarefasService = require("./tasks.service")
+const tarefasService = require("./tasks.service");
 
-const updateTaskOrder = async(req, res) => {
-  try{
+const updateTaskOrder = async (req, res) => {
+  try {
     const taskUpdates = req.body;
-    await tarefasService.updateTaskOrder(taskUpdates);
-    res.status(200).json({ message: "Ordens de tarefas atualizadas com sucesso!" });
-  } catch(error) {
+    const updatedTasks = await tarefasService.updateTaskOrder(taskUpdates);
+    res.status(200).json(updatedTasks);
+  } catch (error) {
     res.status(400).json({ message: error.message });
   }
 };
